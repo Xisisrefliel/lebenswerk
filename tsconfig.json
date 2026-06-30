@@ -1,0 +1,13 @@
+{
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "packages/core" },
+    { "path": "packages/layout-engine" },
+    { "path": "packages/components" },
+    { "path": "packages/layouts" },
+    { "path": "packages/presets" },
+    { "path": "packages/renderer" },
+    { "path": "packages/app" }
+  ]
+}

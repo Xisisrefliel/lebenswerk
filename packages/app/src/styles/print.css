@@ -1,0 +1,11 @@
+/**
+ * No global @media print rules needed.
+ *
+ * The preview lives inside an isolated iframe whose document contains the
+ * template stylesheet + @page rules + Paged.js polyfill. When the user
+ * clicks "Export PDF", we call `iframe.contentWindow.print()`, which prints
+ * only the iframe's document — the parent app's styles never participate.
+ *
+ * This file is intentionally kept as a dedicated import so future layout
+ * experiments have an obvious home.
+ */

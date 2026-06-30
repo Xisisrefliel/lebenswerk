@@ -1,0 +1,31 @@
+{
+  "recommendations": [
+    // Formatting & linting
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+
+    // TypeScript
+    "ms-vscode.vscode-typescript-next",
+
+    // React
+    "dsznajder.es7-react-js-snippets",
+
+    // Tailwind CSS
+    "bradlc.vscode-tailwindcss",
+
+    // EditorConfig
+    "editorconfig.editorconfig",
+
+    // Git
+    "eamodio.gitlens",
+
+    // i18n (project uses react-i18next)
+    "lokalise.i18n-ally",
+
+    // Testing
+    "vitest.explorer",
+
+    // Monorepo
+    "folke.vscode-monorepo-workspace"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  // ── Formatting ──────────────────────────────────────────────────────
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+
+  // ── ESLint ──────────────────────────────────────────────────────────
+  "eslint.useFlatConfig": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.validate": ["typescript", "typescriptreact"],
+
+  // ── TypeScript ──────────────────────────────────────────────────────
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
+
+  // ── File handling ───────────────────────────────────────────────────
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.turbo": true,
+    "**/coverage": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/pnpm-lock.yaml": true
+  },
+
+  // ── Tailwind CSS ────────────────────────────────────────────────────
+  "tailwindCSS.experimental.classRegex": [["className\\s*=\\s*[\"'`]([^\"'`]*)[\"'`]"]],
+
+  // ── Editor ──────────────────────────────────────────────────────────
+  "editor.tabSize": 2,
+  "editor.rulers": [100],
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "snyk.advanced.organization": "6ce99c15-bafa-45e0-8d43-3c4d83af0e7d",
+  "snyk.advanced.autoSelectOrganization": true
+}

@@ -1,0 +1,147 @@
+import type { ExpandedSlotDefinition } from '@cv/layout-engine';
+import { createElement } from 'react';
+import { useTranslation } from 'react-i18next';
+import { getAllComponents, getCompatibleComponents } from '@cv/layout-engine';
+import { useDesignStore, useResolvedSlotAssignments } from '../../state/designStore.js';
+import { useSettingsStore } from '../../state/settingsStore.js';
+import { SlotOptionsEditor } from '../designer/SlotOptionsEditor.js';
+import { getForm } from './formRegistry.js';
+
+interface SlotTabPanelProps {
+  slotName: string;
+  slotDef: ExpandedSlotDefinition;
+}
+
+export function SlotTabPanel({ slotName, slotDef }: SlotTabPanelProps) {
+  const { t } = useTranslation();
+  const moveComponent = useDesignStore((s) => s.moveComponent);
+  const toggleComponent = useDesignStore((s) => s.toggleComponent);
+  const uiLocale = useSettingsStore((s) => s.settings.uiLocale);
+
+  const allSlotAssignments = useResolvedSlotAssignments();
+  const assignments = allSlotAssignments[slotName] ?? [];
+  const allComponents = getAllComponents();
+  const addableComponents = getCompatibleComponents(slotDef, allComponents, assignments);
+
+  return (
+    <div className="flex flex-col gap-3">
+      {/* Slot-level options (position, width, etc.) */}
+      <SlotOptionsEditor slotName={slotName} />
+
+      {assignments.length === 0 && (
+        <div className="border border-dashed border-line-strong p-4 text-center text-xs uppercase tracking-wider text-muted">
+          {t('editor.emptySlot')}
+        </div>
+      )}
+
+      {assignments.map((assignment, idx) => {
+        const compDef = allComponents.find((c) => c.id === assignment.componentId);
+        const Form = getForm(assignment.componentId);
+        const label = compDef?.name[uiLocale] ?? assignment.componentId;
+
+        return (
+          <div
+            key={`${assignment.componentId}-${idx}`}
+            className="border border-line-strong bg-surface"
+          >
+            <div className="flex items-center justify-between border-b border-line px-3 py-2">
+              <span className="text-sm font-semibold text-ink">{label}</span>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  disabled={idx === 0}
+                  onClick={() => {
+                    moveComponent(slotName, idx, idx - 1);
+                  }}
+                  className="p-0.5 text-muted hover:text-ink disabled:opacity-30"
+                  title={t('designer.moveUp')}
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
+                    <path d="M3 8.5l4-4 4 4" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  disabled={idx === assignments.length - 1}
+                  onClick={() => {
+                    moveComponent(slotName, idx, idx + 1);
+                  }}
+                  className="p-0.5 text-muted hover:text-ink disabled:opacity-30"
+                  title={t('designer.moveDown')}
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
+                    <path d="M3 5.5l4 4 4-4" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    toggleComponent(slotName, assignment.componentId);
+                  }}
+                  className="p-0.5 text-muted hover:text-red-500"
+                  title={t('designer.remove')}
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
+                    <path d="M3 3l8 8M11 3l-8 8" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="p-3">
+              {Form ? (
+                createElement(Form, {
+                  slotName,
+                  componentId: assignment.componentId,
+                  options: assignment.options,
+                })
+              ) : (
+                <p className="text-xs text-muted">
+                  {t('editor.noForm', { defaultValue: 'No editor available for this component.' })}
+                </p>
+              )}
+            </div>
+          </div>
+        );
+      })}
+
+      {addableComponents.length > 0 && (
+        <select
+          className="border border-dashed border-line-strong bg-surface px-2 py-1 text-xs uppercase tracking-wider text-muted hover:border-accent"
+          value=""
+          onChange={(e) => {
+            if (e.target.value) toggleComponent(slotName, e.target.value);
+          }}
+        >
+          <option value="">{t('editor.addComponent')}</option>
+          {addableComponents.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name[uiLocale]}
+            </option>
+          ))}
+        </select>
+      )}
+    </div>
+  );
+}
