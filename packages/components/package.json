@@ -1,0 +1,30 @@
+{
+  "name": "@cv/components",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "CV components: Photo, PersonalInfo, ContactInfo, SkillsList, etc.",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@cv/core": "workspace:*",
+    "@cv/layout-engine": "workspace:*",
+    "dompurify": "^3.3.3",
+    "react": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/dompurify": "^3.2.0",
+    "@types/react": "latest",
+    "typescript": "latest",
+    "vitest": "latest"
+  }
+}

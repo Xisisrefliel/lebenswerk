@@ -1,0 +1,1136 @@
+/* Base CV component styles — all colors via var(--cv-*), all fonts via var(--cv-font-*) */
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+}
+
+.cv-page {
+  width: 210mm;
+  min-height: 297mm;
+  font-family: var(--cv-font-body);
+  font-size: 10.5pt;
+  line-height: 1.45;
+  color: var(--cv-text);
+  background: var(--cv-background);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* --- Section title variants --- */
+
+.cv-section-title {
+  font-family: var(--cv-font-heading);
+  font-size: 9.5pt;
+  font-weight: 700;
+  color: var(--cv-primary);
+  margin: 0 0 1.5mm 0;
+  padding-bottom: 0;
+}
+
+.cv-section-title--uppercase-spaced {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 0.5pt solid var(--cv-border);
+}
+
+.cv-section-title--normal {
+  text-transform: none;
+  letter-spacing: normal;
+  border-bottom: none;
+}
+
+.cv-section-title--accent-bar {
+  text-transform: none;
+  letter-spacing: normal;
+  border-bottom: none;
+  padding-left: 3mm;
+  border-left: 2.5pt solid var(--cv-primary);
+}
+
+.cv-section-title--accent-underline {
+  text-transform: none;
+  letter-spacing: normal;
+  border-bottom: 2pt solid var(--cv-primary);
+}
+
+/* --- Sidebar section title override --- */
+
+.cv-slot-sidebar .cv-section-title {
+  color: var(--cv-text);
+}
+
+/* --- Common elements --- */
+
+.cv-section {
+  break-inside: avoid-page;
+  page-break-inside: avoid;
+}
+
+.cv-section.cv-main-section {
+  break-inside: auto;
+  page-break-inside: auto;
+}
+
+.cv-kv {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1mm 3mm;
+  font-size: 9.5pt;
+  margin: 0;
+}
+
+.cv-kv dt {
+  color: var(--cv-muted);
+  font-weight: 500;
+}
+
+.cv-kv dd {
+  margin: 0;
+  color: var(--cv-text);
+  word-break: break-word;
+}
+
+.cv-kv--skill dt {
+  color: var(--cv-text);
+  font-weight: 400;
+}
+.cv-kv--skill dd {
+  color: var(--cv-muted);
+  text-align: right;
+  font-size: 9pt;
+}
+
+.cv-entry {
+  display: grid;
+  grid-template-columns: 38mm 1fr;
+  gap: 2mm 6mm;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.cv-entry + .cv-entry {
+  margin-top: var(--cv-spacing-entry);
+}
+
+.cv-entry-date {
+  color: var(--cv-muted);
+  font-size: 9.5pt;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cv-entry-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5mm;
+}
+
+.cv-entry-title {
+  font-weight: 600;
+  color: var(--cv-text);
+}
+
+.cv-entry-org {
+  color: var(--cv-muted);
+  font-size: 9.5pt;
+}
+
+.cv-entry-summary {
+  grid-column: 2;
+  margin: 1mm 0 0 0;
+}
+
+/* Rich text HTML rendered inside summary/description fields */
+.cv-entry-summary p,
+.cv-summary p {
+  margin: 0 0 1mm 0;
+}
+.cv-entry-summary p:last-child,
+.cv-summary p:last-child {
+  margin-bottom: 0;
+}
+.cv-entry-summary ul,
+.cv-entry-summary ol,
+.cv-summary ul,
+.cv-summary ol {
+  margin: 1mm 0;
+  padding-left: 4mm;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5mm;
+}
+.cv-entry-summary li::marker,
+.cv-summary li::marker {
+  color: var(--cv-primary);
+}
+.cv-entry-summary strong,
+.cv-summary strong {
+  font-weight: 600;
+}
+.cv-entry-summary em,
+.cv-summary em {
+  font-style: italic;
+}
+
+.cv-bullets {
+  grid-column: 2;
+  margin: 1mm 0 0 0;
+  padding-left: 4mm;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5mm;
+}
+
+.cv-bullets li::marker {
+  color: var(--cv-primary);
+}
+
+.cv-summary {
+  margin: 0;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* ===================================================================
+   Timeline wrapper — wraps entries in Experience / Education sections.
+   Variants: plain (no decoration), line (dots + thin line),
+   accent (ring markers + bold accent line).
+   =================================================================== */
+
+.cv-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cv-spacing-entry);
+}
+
+/* Entries inside timeline use wrapper gap instead of margin */
+.cv-timeline .cv-entry + .cv-entry {
+  margin-top: 0;
+}
+
+/* --- plain: compact typography, no visual decoration --- */
+
+.cv-timeline--plain .cv-entry {
+  grid-template-columns: 34mm 1fr;
+  gap: 0 5mm;
+}
+.cv-timeline--plain .cv-entry-title {
+  font-family: var(--cv-font-heading, var(--cv-font-body));
+  font-size: 10pt;
+}
+.cv-timeline--plain .cv-entry-date {
+  font-size: 9pt;
+}
+.cv-timeline--plain .cv-entry-org {
+  font-size: 9pt;
+}
+.cv-timeline--plain .cv-entry-summary {
+  font-size: 9.5pt;
+}
+
+/* --- Shared: line & accent common structure --- */
+
+.cv-timeline--line,
+.cv-timeline--accent {
+  position: relative;
+  /* left padding makes room for the timeline track between date & content */
+}
+
+.cv-timeline--line .cv-entry,
+.cv-timeline--accent .cv-entry {
+  grid-template-columns: 34mm 1fr;
+  gap: 0 8mm;
+  position: relative;
+}
+
+/* Continuous vertical line via wrapper pseudo */
+.cv-timeline--line::before,
+.cv-timeline--accent::before {
+  content: '';
+  position: absolute;
+  /* Centered in the 8mm gap: 34mm (date col) + 4mm (half gap) = 38mm */
+  left: 37.5mm;
+  top: 2mm;
+  bottom: 2mm;
+  z-index: 0;
+}
+
+/* Dot marker on each entry via date pseudo */
+.cv-timeline--line .cv-entry-date,
+.cv-timeline--accent .cv-entry-date {
+  position: relative;
+  text-align: right;
+  font-size: 9pt;
+  padding-right: 0.5mm;
+}
+
+.cv-timeline--line .cv-entry-date::after,
+.cv-timeline--accent .cv-entry-date::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+}
+
+/* Compact typography for timeline entries */
+.cv-timeline--line .cv-entry-title,
+.cv-timeline--accent .cv-entry-title {
+  font-family: var(--cv-font-heading, var(--cv-font-body));
+  font-size: 10pt;
+  font-weight: 700;
+}
+.cv-timeline--line .cv-entry-org,
+.cv-timeline--accent .cv-entry-org {
+  font-size: 9pt;
+}
+.cv-timeline--line .cv-entry-head,
+.cv-timeline--accent .cv-entry-head {
+  gap: 0.3mm;
+}
+.cv-timeline--line .cv-entry-summary,
+.cv-timeline--accent .cv-entry-summary {
+  font-size: 9.5pt;
+  margin-top: 0.5mm;
+}
+
+/* --- line: thin border + small filled dots --- */
+
+.cv-timeline--line::before {
+  width: 0.75pt;
+  background: var(--cv-border);
+}
+
+.cv-timeline--line .cv-entry-date::after {
+  /* 2.5mm dot centered on the line at left: 31.5mm from entry edge */
+  /* Date is 28mm wide. Dot center at 31.5mm → right edge at 32.75mm from date left.
+     Date right edge at 28mm. Offset from right: -(32.75 - 28) = -4.75mm */
+  right: -4.75mm;
+  top: 1.2mm;
+  width: 2.5mm;
+  height: 2.5mm;
+  background: var(--cv-primary);
+}
+
+/* --- accent: thicker primary line + ring markers --- */
+
+.cv-timeline--accent::before {
+  width: 1.5pt;
+  background: var(--cv-primary);
+  opacity: 0.25;
+}
+
+.cv-timeline--accent .cv-entry-date::after {
+  right: -5.25mm;
+  top: 0.8mm;
+  width: 3.5mm;
+  height: 3.5mm;
+  background: var(--cv-background, #fff);
+  border: 1.5pt solid var(--cv-primary);
+}
+
+/* First entry in accent gets a filled dot to mark "current" */
+.cv-timeline--accent .cv-entry:first-child .cv-entry-date::after {
+  background: var(--cv-primary);
+}
+
+.cv-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+  font-size: 10pt;
+}
+
+/* --- Photo --- */
+
+.cv-photo {
+  display: block;
+  object-fit: cover;
+  background: #d9dde3;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.cv-photo--square {
+  border-radius: 0;
+}
+.cv-photo--rounded {
+  border-radius: 2mm;
+}
+.cv-photo--circle {
+  border-radius: 50%;
+}
+.cv-photo--sm {
+  width: 35mm;
+  aspect-ratio: 1;
+}
+.cv-photo--md {
+  width: 50mm;
+  aspect-ratio: 1;
+}
+.cv-photo--lg {
+  width: 65mm;
+  aspect-ratio: 1;
+}
+
+/* --- Name & role --- */
+
+.cv-name {
+  font-family: var(--cv-font-heading);
+  font-size: 20pt;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--cv-primary);
+  margin: 0 0 1mm 0;
+}
+
+.cv-role {
+  font-size: 12pt;
+  color: var(--cv-muted);
+  margin: 0 0 4mm 0;
+}
+
+/* --- Skills display modes --- */
+
+.cv-skill {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2mm;
+  padding: 0.4mm 0;
+  font-size: 9.5pt;
+  min-width: 0;
+}
+.cv-skill > span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.cv-skill-level {
+  color: var(--cv-muted);
+  font-size: 9pt;
+}
+
+.cv-skill-bar {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  padding: 1mm 0;
+}
+.cv-skill-bar-name {
+  flex-shrink: 0;
+  min-width: 20mm;
+  font-size: 10pt;
+}
+.cv-skill-bar-track {
+  flex: 1;
+  height: 2mm;
+  background: var(--cv-border);
+  border-radius: 1mm;
+}
+.cv-skill-bar-fill {
+  height: 100%;
+  background: var(--cv-primary);
+  border-radius: 1mm;
+}
+
+.cv-skill-visual {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8mm 0;
+  font-size: 10pt;
+}
+.cv-skill-visual-icons {
+  display: flex;
+  gap: 0;
+  color: var(--cv-primary);
+  font-size: 9pt;
+}
+.cv-skill-visual-icons .cv-empty {
+  color: var(--cv-border);
+}
+.cv-skill-visual-icons .cv-icon-half {
+  position: relative;
+  display: inline-block;
+}
+.cv-skill-visual-icons .cv-icon-half-filled {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  width: 50%;
+}
+.cv-skill-visual-icons .cv-icon-half-empty {
+  color: var(--cv-border);
+}
+
+/* --- Skill groups (sidebar — tight, minimal) --- */
+.cv-skill-group {
+  margin-bottom: 2.5mm;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.cv-skill-group:last-child {
+  margin-bottom: 0;
+}
+.cv-skill-group-heading {
+  font-size: 8.5pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cv-text);
+  margin-bottom: 0.5mm;
+}
+.cv-skill-group-children {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.cv-skill-group-children .cv-skill {
+  padding: 0.3mm 0;
+  border-bottom: none;
+  font-weight: 400;
+  font-size: 9.5pt;
+}
+
+/* --- Inline bar (used inside grouped skill header) --- */
+.cv-skill-bar-inline {
+  flex-shrink: 0;
+  width: 18mm;
+  display: flex;
+  align-items: center;
+}
+.cv-skill-bar-inline .cv-skill-bar-track {
+  width: 100%;
+  text-align: right;
+}
+
+/* --- Skills columns (sidebar) --- */
+.cv-skills-grid {
+  display: grid;
+  gap: 0 4mm;
+}
+.cv-skills-grid--1 {
+  grid-template-columns: 1fr;
+}
+.cv-skills-grid--2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* --- Skills main slot (wider layout) --- */
+.cv-skills-main {
+  display: grid;
+  gap: 4mm 6mm;
+}
+.cv-skills-main--1 {
+  grid-template-columns: 1fr;
+}
+.cv-skills-main--2 {
+  grid-template-columns: 1fr 1fr;
+}
+.cv-skills-main--3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cv-skill-group-main {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.cv-skill-group-main .cv-skill-group-heading {
+  font-size: 9pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cv-muted);
+  margin-bottom: 1.5mm;
+  padding-bottom: 1mm;
+  border-bottom: 0.5pt solid var(--cv-border);
+}
+.cv-skill-group-children-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.cv-skill-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3mm;
+  padding: 0.8mm 0;
+  font-size: 10pt;
+}
+.cv-skill-main .cv-skill-bar-inline {
+  width: 25mm;
+}
+
+/* --- Contact items --- */
+.cv-contact-list--vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2mm;
+}
+.cv-contact-list--horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5mm 5mm;
+}
+
+.cv-contact-item {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.5mm 2mm;
+  font-size: 9.5pt;
+}
+.cv-contact-item--text-only {
+  display: flex;
+  align-items: baseline;
+  gap: 2mm;
+  font-size: 9.5pt;
+}
+.cv-contact-item--icon-only {
+  display: inline-flex;
+}
+
+.cv-contact-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  flex-shrink: 0;
+  width: 3.5mm;
+  height: 3.5mm;
+  color: var(--cv-primary);
+}
+.cv-contact-icon-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+.cv-contact-icon {
+  display: block;
+}
+
+.cv-contact-label {
+  color: var(--cv-muted);
+  font-weight: 500;
+  font-size: 9pt;
+  white-space: nowrap;
+}
+.cv-contact-value {
+  color: var(--cv-text);
+  word-break: break-word;
+}
+.cv-contact-value--multiline {
+  display: flex;
+  flex-direction: column;
+}
+.cv-contact-value-line {
+  display: block;
+}
+a.cv-contact-link {
+  color: inherit;
+  text-decoration: none;
+  font: inherit;
+}
+
+/* --- Certificates sidebar --- */
+.cv-cert-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+}
+.cv-cert-sidebar-item {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.cv-cert-sidebar-name {
+  font-size: 9.5pt;
+  font-weight: 600;
+  color: var(--cv-text);
+}
+.cv-cert-sidebar-meta {
+  font-size: 8.5pt;
+  color: var(--cv-muted);
+}
+
+/* --- Entry keyword tags (Projects) --- */
+.cv-entry-keywords {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2mm;
+  margin-top: 1.5mm;
+}
+.cv-entry-keyword {
+  font-size: 8pt;
+  padding: 0.5mm 2mm;
+  border-radius: 0.8mm;
+  background: color-mix(in srgb, var(--cv-primary) 8%, transparent);
+  color: var(--cv-primary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* --- Interest tags --- */
+.cv-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2mm;
+}
+.cv-tag {
+  font-size: 9pt;
+  padding: 0.8mm 2.5mm;
+  border: 0.5pt solid var(--cv-border);
+  border-radius: 1mm;
+  color: var(--cv-text);
+}
+
+/* --- Cover Letter (Anschreiben) --- */
+
+/* In-slot variant: no own padding (inherits from slot) */
+.cv-cl-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5mm;
+}
+
+/* Standalone variant (fallback rendering without layout frame) */
+.cv-cover-letter {
+  padding: 20mm 20mm;
+  display: flex;
+  flex-direction: column;
+  gap: 6mm;
+}
+.cv-cl-sender {
+  font-size: 9.5pt;
+  color: var(--cv-text);
+  line-height: 1.5;
+}
+.cv-cl-sender-name {
+  font-weight: 600;
+}
+.cv-cl-recipient {
+  font-size: 10pt;
+  color: var(--cv-text);
+  line-height: 1.5;
+  margin-top: 4mm;
+}
+.cv-cl-recipient-company {
+  font-weight: 600;
+}
+.cv-cl-date {
+  font-size: 10pt;
+  color: var(--cv-muted);
+  text-align: right;
+  margin-top: 2mm;
+}
+.cv-cl-subject {
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--cv-text);
+  font-family: var(--cv-font-heading);
+  margin-top: 4mm;
+}
+.cv-cl-salutation {
+  font-size: 10.5pt;
+  color: var(--cv-text);
+}
+.cv-cl-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3mm;
+}
+.cv-cl-paragraph {
+  font-size: 10.5pt;
+  line-height: 1.5;
+  color: var(--cv-text);
+  text-align: justify;
+  hyphens: auto;
+}
+.cv-cl-paragraph p {
+  margin: 0;
+}
+.cv-cl-closing {
+  font-size: 10.5pt;
+  color: var(--cv-text);
+  margin-top: 4mm;
+}
+.cv-cl-signature {
+  margin-top: 3mm;
+  font-size: 10.5pt;
+  color: var(--cv-text);
+}
+.cv-cl-signature-image {
+  max-height: 12mm;
+  width: auto;
+  display: block;
+  margin-bottom: 1mm;
+}
+
+/* ========================================================================= */
+/* DIN 5008 Cover Letter (Anschreiben)                                       */
+/* All positioning is enforced here — designs only control header/footer bg.  */
+/* ========================================================================= */
+
+/* --- Form-specific dimensions via CSS custom properties --- */
+.cv-din5008--form-a {
+  --din-header-h: 27mm;
+  --din-addr-top: 27mm;
+  --din-addr-zone-top: 44.7mm;
+  --din-fold1: 105mm;
+  --din-fold2: 210mm;
+  --din-body-top: 97.5mm;
+}
+.cv-din5008--form-b {
+  --din-header-h: 45mm;
+  --din-addr-top: 45mm;
+  --din-addr-zone-top: 62.7mm;
+  --din-fold1: 105mm;
+  --din-fold2: 210mm;
+  --din-body-top: 115mm;
+}
+
+/* --- Page container --- */
+.cv-din5008 {
+  --din-punch: 148.5mm;
+  --din-margin-left: 25mm;
+  --din-margin-right: 20mm;
+  position: relative;
+  width: 210mm;
+  min-height: 297mm;
+  font-family: var(--cv-font-body);
+  font-size: 10.5pt;
+  line-height: 1.45;
+  color: var(--cv-text);
+  background: var(--cv-background, #ffffff);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* --- Header zone (design-customizable) --- */
+.cv-din5008-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--din-header-h);
+  padding: 0 var(--din-margin-right) 0 var(--din-margin-left);
+  overflow: hidden;
+}
+.cv-din5008-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+/* Direct children: fixed by default, title grows to fill remaining space */
+.cv-din5008-header-content > * {
+  flex: 0 0 auto;
+}
+.cv-din5008-header-content > .cv-lh-title {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* --- Fold and punch marks (DIN 5008: left 3mm, fold 5mm wide, punch 8mm wide) ---
+   top values are set as inline styles in Din5008Letter.tsx to avoid
+   CSS variable scoping issues during Paged.js pagination. */
+.cv-din5008-fold1,
+.cv-din5008-fold2,
+.cv-din5008-punch {
+  position: absolute;
+  left: 3mm;
+  height: 0;
+  border-top: 0.5pt solid #999;
+  z-index: 1;
+}
+.cv-din5008-fold1,
+.cv-din5008-fold2 {
+  width: 5mm;
+}
+.cv-din5008-punch {
+  width: 8mm;
+}
+
+/* --- Return address line (inside address window, compact) --- */
+.cv-din5008-return-addr {
+  position: absolute;
+  top: var(--din-addr-top);
+  left: var(--din-margin-left);
+  width: 85mm;
+  height: 17.7mm;
+  display: flex;
+  align-items: flex-end;
+  font-size: 8pt;
+  color: var(--cv-muted);
+  text-decoration: underline;
+  padding-bottom: 1mm;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* --- Recipient address field (6 lines) --- */
+.cv-din5008-addr {
+  position: absolute;
+  top: var(--din-addr-zone-top);
+  left: var(--din-margin-left);
+  width: 85mm;
+  height: 27.3mm;
+  font-size: 10.5pt;
+  line-height: 1.45;
+  color: var(--cv-text);
+  overflow: hidden;
+}
+
+/* --- Information block (right side) --- */
+/* DIN 5008: info block spans the same 45mm zone as the address field, right-aligned,
+   content bottom-aligned so the date flows into the subject line below. */
+.cv-din5008-info {
+  position: absolute;
+  top: var(--din-addr-top);
+  right: var(--din-margin-right);
+  height: 45mm;
+  max-width: 75mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  font-size: 9pt;
+  line-height: 1.5;
+  color: var(--cv-text);
+  text-align: left;
+}
+.cv-din5008-info-name {
+  font-weight: 600;
+  margin-bottom: 1mm;
+}
+.cv-din5008-info-date {
+  margin-top: 3mm;
+  color: var(--cv-muted);
+}
+
+/* --- Letter body (flows for pagination) --- */
+.cv-din5008-body {
+  padding-top: var(--din-body-top);
+  padding-left: var(--din-margin-left);
+  padding-right: var(--din-margin-right);
+  padding-bottom: 25mm;
+}
+
+/* Subject */
+.cv-din5008-subject {
+  font-size: 11pt;
+  font-weight: 700;
+  font-family: var(--cv-font-heading);
+  color: var(--cv-text);
+  margin-bottom: 2mm;
+}
+.cv-din5008-reference {
+  font-size: 9.5pt;
+  color: var(--cv-muted);
+  margin-bottom: 6mm;
+}
+/* Collapse spacing when there's no reference */
+.cv-din5008-subject:last-child,
+.cv-din5008-subject + .cv-din5008-salutation {
+  margin-bottom: 6mm;
+}
+
+/* Salutation */
+.cv-din5008-salutation {
+  font-size: 10.5pt;
+  margin-bottom: 3mm;
+}
+
+/* Paragraphs */
+.cv-din5008-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3mm;
+}
+.cv-din5008-paragraph {
+  font-size: 10.5pt;
+  line-height: 1.4;
+  text-align: justify;
+  hyphens: auto;
+}
+.cv-din5008-paragraph p {
+  margin: 0;
+}
+
+/* Closing */
+.cv-din5008-closing {
+  margin-top: 6mm;
+}
+
+/* Signature */
+.cv-din5008-signature {
+  margin-top: 1mm;
+  font-size: 10.5pt;
+}
+.cv-din5008-signature-img {
+  max-height: 14mm;
+  width: auto;
+  display: block;
+  margin-bottom: 1mm;
+}
+
+/* --- Footer (optional, design-controlled) --- */
+.cv-din5008-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20mm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--din-margin-left) 0 var(--din-margin-right);
+  border-top: 0.5pt solid var(--cv-border);
+  overflow: hidden;
+}
+.cv-din5008-footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.cv-din5008-footer-content > * {
+  flex: 0 0 auto;
+}
+
+/* ========================================================================= */
+/* Letter header/footer components (cv-lh-*)                                 */
+/* Purpose-built for DIN 5008 header/footer zones — compact, no headings.    */
+/* ========================================================================= */
+
+.cv-lh-photo {
+  display: block;
+  object-fit: cover;
+  max-height: calc(var(--din-header-h, 45mm) - 6mm);
+  width: auto;
+  aspect-ratio: 1;
+}
+.cv-lh-photo--circle {
+  border-radius: 50%;
+}
+.cv-lh-photo--rounded {
+  border-radius: 2mm;
+}
+.cv-lh-photo--square {
+  border-radius: 0;
+}
+
+/* --- Title: adapts to available header height --- */
+.cv-lh-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5mm;
+  padding: 0 4mm;
+}
+.cv-lh-title-name {
+  font-family: var(--cv-font-heading);
+  font-size: var(--lh-title-name-size, 16pt);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--cv-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cv-lh-title-label {
+  font-size: var(--lh-title-label-size, 10pt);
+  line-height: 1.2;
+  color: var(--cv-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Form A (27mm): compact sizing */
+.cv-din5008--form-a .cv-lh-title {
+  gap: 1mm;
+  padding-left: 0;
+}
+.cv-din5008--form-a {
+  --lh-title-name-size: 18pt;
+  --lh-title-label-size: 12pt;
+}
+.cv-din5008--form-a {
+  --lh-contact-size: 7.5pt;
+  --lh-contact-icon-size: 2.5mm;
+  --lh-contact-gap: 0.8mm;
+}
+
+/* Form B (45mm): generous sizing */
+.cv-din5008--form-b {
+  --lh-title-name-size: 18pt;
+  --lh-title-label-size: 11pt;
+}
+.cv-din5008--form-b .cv-lh-title {
+  gap: 2mm;
+}
+.cv-din5008--form-b {
+  --lh-contact-size: 9pt;
+  --lh-contact-icon-size: 3.5mm;
+  --lh-contact-gap: 1.5mm;
+}
+
+/* --- Contact: adapts via custom properties --- */
+.cv-lh-contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--lh-contact-gap, 1mm);
+}
+.cv-lh-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5mm;
+  font-size: var(--lh-contact-size, 8pt);
+  color: var(--cv-text);
+  white-space: nowrap;
+}
+.cv-lh-contact-icon {
+  display: flex;
+  flex-shrink: 0;
+}
+.cv-lh-contact-icon svg {
+  width: var(--lh-contact-icon-size, 3mm);
+  height: var(--lh-contact-icon-size, 3mm);
+}
+.cv-lh-contact-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Horizontal variant for footer — distributed across width */
+.cv-lh-contact--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 2mm 5mm;
+  width: 100%;
+}
+
+/* Footer-specific overrides for letter components */
+.cv-din5008-footer .cv-lh-contact-item {
+  font-size: 7pt;
+}

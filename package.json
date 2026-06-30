@@ -1,0 +1,48 @@
+{
+  "name": "lebenswerk",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Static browser-based Lebenslauf / Anschreiben / CV creator with modular HTML/CSS templates.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "dev": "pnpm --filter @cv/app dev",
+    "build": "pnpm --filter @cv/app build",
+    "build:app": "pnpm --filter @cv/app build",
+    "typecheck": "pnpm -r run typecheck",
+    "lint": "eslint --cache --cache-location node_modules/.cache/eslint/ .",
+    "lint:fix": "eslint --cache --cache-location node_modules/.cache/eslint/ . --fix",
+    "format": "prettier --cache --write .",
+    "format:check": "prettier --cache --check .",
+    "prepare": "husky",
+    "test": "pnpm -r run test",
+    "test:e2e": "pnpm --filter @cv/app test:e2e",
+    "clean": "pnpm -r exec rm -rf dist .turbo node_modules/.vite"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9",
+    "@playwright/test": "^1.61.1",
+    "@types/node": "latest",
+    "eslint": "^9",
+    "eslint-plugin-boundaries": "latest",
+    "eslint-plugin-jsdoc": "^62.9.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-perfectionist": "^5.8.0",
+    "eslint-plugin-react": "latest",
+    "eslint-plugin-react-hooks": "latest",
+    "eslint-plugin-unicorn": "^64.0.0",
+    "globals": "latest",
+    "husky": "^9.1.7",
+    "prettier": "latest",
+    "typescript": "latest",
+    "typescript-eslint": "latest"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
