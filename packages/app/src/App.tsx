@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Agentation } from 'agentation';
 import { useTranslation } from 'react-i18next';
 import { DocumentToolbar } from './features/editor/DocumentToolbar.js';
 import { ResumeEditor } from './features/editor/ResumeEditor.js';
@@ -30,6 +31,7 @@ export function App() {
   };
 
   return (
+    <>
     <div
       className="flex min-h-screen flex-col overflow-x-hidden lg:h-screen lg:min-h-0"
       data-cv-app-chrome
@@ -269,5 +271,7 @@ export function App() {
         )}
       </button>
     </div>
+    {process.env.NODE_ENV === 'development' && <Agentation />}
+    </>
   );
 }

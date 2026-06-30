@@ -28,6 +28,7 @@
     "@eslint/js": "^9",
     "@playwright/test": "^1.61.1",
     "@types/node": "latest",
+    "agentation": "^3.0.2",
     "eslint": "^9",
     "eslint-plugin-boundaries": "latest",
     "eslint-plugin-jsdoc": "^62.9.0",
