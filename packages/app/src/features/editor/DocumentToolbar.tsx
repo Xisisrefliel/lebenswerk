@@ -1,5 +1,6 @@
 import type { Locale } from '@cv/core';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { getAllDesigns } from '@cv/layout-engine';
 import { useActiveDesign, useDesignStore } from '../../state/designStore.js';
@@ -22,8 +23,33 @@ export function DocumentToolbar() {
   const documentLocale = useSettingsStore((s) => s.settings.documentLocale);
   const setDocumentLocale = useSettingsStore((s) => s.setDocumentLocale);
   const [designEditorOpen, setDesignEditorOpen] = useState(false);
+  const customizeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const customizerRef = useRef<HTMLDivElement | null>(null);
 
   const designs = getAllDesigns();
+
+  useEffect(() => {
+    if (!designEditorOpen) return;
+
+    const handlePointerDown = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (customizerRef.current?.contains(target) || customizeButtonRef.current?.contains(target)) {
+        return;
+      }
+      setDesignEditorOpen(false);
+    };
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setDesignEditorOpen(false);
+    };
+
+    document.addEventListener('mousedown', handlePointerDown);
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [designEditorOpen]);
 
   if (!design) return null;
 
@@ -33,8 +59,8 @@ export function DocumentToolbar() {
   }));
 
   return (
-    <>
-      <div className="flex shrink-0 flex-wrap items-center gap-2 overflow-x-auto border-b border-line bg-canvas/60 px-3 py-2 backdrop-blur-sm sm:gap-2.5">
+    <div className="relative z-30 shrink-0 border-b border-line bg-canvas/60 backdrop-blur-sm">
+      <div className="flex flex-wrap items-center gap-2 overflow-x-auto px-3 py-2 sm:gap-2.5">
         {/* Design selector with label */}
         <div className="flex items-center gap-2">
           <span className="text-xs font-medium text-muted">
@@ -99,11 +125,16 @@ export function DocumentToolbar() {
 
         {/* Design customization button */}
         <button
+          ref={customizeButtonRef}
           type="button"
+          aria-controls="design-customizer-popover"
+          aria-expanded={designEditorOpen}
           onClick={() => {
-            setDesignEditorOpen(true);
+            setDesignEditorOpen((v) => !v);
           }}
-          className="flex items-center gap-1.5 rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-ink transition-colors hover:border-white/25 hover:bg-white/[0.06]"
+          className={`flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs font-medium text-ink transition-colors hover:border-white/25 hover:bg-white/[0.06] ${
+            designEditorOpen ? 'border-blue bg-blue/10' : 'border-line-strong bg-white/[0.03]'
+          }`}
         >
           <svg
             className="h-4 w-4"
@@ -136,21 +167,18 @@ export function DocumentToolbar() {
         )}
       </div>
 
-      {/* Design customization dialog */}
-      {designEditorOpen && (
-        <div
-          role="presentation"
-          className="cv-overlay fixed inset-0 z-50 flex items-start justify-center bg-black/60 pt-20"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setDesignEditorOpen(false);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') setDesignEditorOpen(false);
-          }}
-        >
-          <div className="max-h-[70vh] w-full max-w-lg overflow-y-auto rounded-xl border border-line-strong bg-surface-2 p-5 shadow-lg">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-ink">
+      {/* Design customization popover */}
+      {designEditorOpen &&
+        createPortal(
+          <div
+            ref={customizerRef}
+            id="design-customizer-popover"
+            role="dialog"
+            aria-label={t('toolbar.customizeTitle')}
+            className="fixed left-3 right-3 top-[6.5rem] z-[80] max-h-[70vh] overflow-y-auto rounded-lg border border-line-strong bg-surface-2 p-3 shadow-2xl shadow-black/50 sm:left-1/2 sm:right-auto sm:w-[30rem] sm:-translate-x-1/2"
+          >
+            <div className="mb-2.5 flex items-center justify-between">
+              <h2 className="text-xs font-semibold text-ink">
                 {t('toolbar.customizeTitle')}
               </h2>
               <button
@@ -158,11 +186,12 @@ export function DocumentToolbar() {
                 onClick={() => {
                   setDesignEditorOpen(false);
                 }}
-                className="rounded-md p-1.5 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink"
+                className="rounded-md p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink"
+                title={t('actions.close', { defaultValue: 'Close' })}
               >
                 <svg
-                  width="18"
-                  height="18"
+                  width="16"
+                  height="16"
                   viewBox="0 0 16 16"
                   fill="none"
                   stroke="currentColor"
@@ -173,9 +202,9 @@ export function DocumentToolbar() {
               </button>
             </div>
             <TokenEditor />
-          </div>
-        </div>
-      )}
-    </>
+          </div>,
+          document.body,
+        )}
+    </div>
   );
 }

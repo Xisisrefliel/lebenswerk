@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useActiveDesign, useDesignStore } from '../../state/designStore.js';
-import { DesignerPanel } from '../designer/DesignerPanel.js';
 import { CoverLetterEditor } from './CoverLetterEditor.js';
 import { SlotTabPanel } from './SlotTabPanel.js';
-
-const SETTINGS_TAB = '__settings__';
 
 export function SlotTabs() {
   const { t } = useTranslation();
@@ -13,10 +10,9 @@ export function SlotTabs() {
   const activeDocumentType = useDesignStore((s) => s.activeDocumentType);
 
   const slotNames = design ? Object.keys(design.slots) : [];
-  const allTabs = [...slotNames, SETTINGS_TAB];
-  const [activeTab, setActiveTab] = useState(slotNames[0] ?? SETTINGS_TAB);
+  const [activeTab, setActiveTab] = useState(slotNames[0] ?? '');
 
-  const resolvedTab = allTabs.includes(activeTab) ? activeTab : (slotNames[0] ?? SETTINGS_TAB);
+  const resolvedTab = slotNames.includes(activeTab) ? activeTab : (slotNames[0] ?? '');
 
   if (!design) return null;
 
@@ -30,14 +26,10 @@ export function SlotTabs() {
 
   return (
     <div className="flex flex-col gap-3">
-      <TabBar tabs={allTabs} activeTab={resolvedTab} onTabChange={setActiveTab} t={t} />
+      <TabBar tabs={slotNames} activeTab={resolvedTab} onTabChange={setActiveTab} t={t} />
 
-      {resolvedTab === SETTINGS_TAB ? (
-        <DesignerPanel />
-      ) : (
-        design.slots[resolvedTab] && (
-          <SlotTabPanel slotName={resolvedTab} slotDef={design.slots[resolvedTab]} />
-        )
+      {design.slots[resolvedTab] && (
+        <SlotTabPanel slotName={resolvedTab} slotDef={design.slots[resolvedTab]} />
       )}
     </div>
   );
@@ -69,7 +61,7 @@ function TabBar({
               : 'text-muted hover:text-ink hover:bg-white/[0.04]'
           }`}
         >
-          {name === SETTINGS_TAB ? t('tabs.settings') : t(`slots.${name}`, { defaultValue: name })}
+          {t(`slots.${name}`, { defaultValue: name })}
         </button>
       ))}
     </div>

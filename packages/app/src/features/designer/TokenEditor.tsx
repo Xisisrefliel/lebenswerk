@@ -10,7 +10,7 @@ import { ColorPickerPopover } from './ColorPickerPopover.js';
 
 function SettingsSection({ title, children }: { title?: string; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-2.5 rounded-lg border border-line-strong bg-surface p-3.5">
+    <div className="flex flex-col gap-2 rounded-lg border border-line-strong bg-surface p-3">
       {title && (
         <h4 className="text-xs font-semibold text-muted">{title}</h4>
       )}
@@ -46,7 +46,7 @@ export function TokenEditor() {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-2.5">
       {/* Colors */}
       {design.colors.length > 0 && (
         <SettingsSection title={t('designer.colors')}>
@@ -58,7 +58,7 @@ export function TokenEditor() {
                 onClick={() => {
                   applyPalette(palette.colors);
                 }}
-                className="flex h-6 w-6 overflow-hidden rounded-md border border-line-strong transition-all hover:scale-110 hover:border-white/40"
+                className="flex h-5 w-5 overflow-hidden rounded-md border border-line-strong transition-all hover:scale-110 hover:border-white/40"
                 title={t(`designer.palette_${palette.id}`, { defaultValue: palette.id })}
               >
                 <span
@@ -117,7 +117,7 @@ export function TokenEditor() {
       {(design.spacing || (design.options && Object.keys(design.options).length > 0)) && (
         <SettingsSection title="Layout">
           {design.spacing && (
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs text-muted">{t('designer.spacing')}</span>
               <ToggleGroup
                 options={design.spacing.options.map((opt) => ({
@@ -136,7 +136,7 @@ export function TokenEditor() {
                 const currentValue =
                   (tokens.options[decl.key] as string | undefined) ?? decl.default;
                 return (
-                  <div key={decl.key} className="flex items-center justify-between">
+                  <div key={decl.key} className="flex flex-wrap items-center justify-between gap-2">
                     <span className="text-xs text-muted">{decl.label[uiLocale]}</span>
                     <ToggleGroup
                       options={decl.values.map((v) => ({

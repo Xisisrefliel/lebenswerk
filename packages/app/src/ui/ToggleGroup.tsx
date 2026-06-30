@@ -6,7 +6,7 @@ interface ToggleGroupProps<T extends string> {
 
 export function ToggleGroup<T extends string>({ options, value, onChange }: ToggleGroupProps<T>) {
   return (
-    <div className="inline-flex items-center gap-0.5 rounded-lg border border-line-strong bg-white/[0.03] p-0.5">
+    <div className="inline-flex max-w-full flex-wrap items-center gap-0.5 rounded-lg border border-line-strong bg-white/[0.03] p-0.5">
       {options.map((opt) => (
         <button
           key={opt.value}
@@ -14,7 +14,7 @@ export function ToggleGroup<T extends string>({ options, value, onChange }: Togg
           onClick={() => {
             onChange(opt.value);
           }}
-          className={`rounded-md px-2.5 py-1 text-xs font-medium transition-all duration-150 ${
+          className={`whitespace-nowrap rounded-md px-2.5 py-1 text-xs font-medium transition-all duration-150 ${
             value === opt.value
               ? 'bg-white/[0.1] text-ink shadow-sm'
               : 'text-muted hover:text-ink hover:bg-white/[0.04]'
