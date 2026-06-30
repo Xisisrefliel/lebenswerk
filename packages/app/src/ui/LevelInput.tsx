@@ -59,7 +59,7 @@ export function LevelInput({ displayMode, value, onChange, i18nPrefix }: LevelIn
             onChange={(e) => {
               onChange(Number(e.target.value));
             }}
-            className="h-1.5 w-full cursor-pointer accent-accent"
+            className="h-1.5 w-full cursor-pointer accent-blue"
           />
           <span className="w-8 text-right text-xs text-muted">{pct}%</span>
         </div>
@@ -146,7 +146,7 @@ export function LevelInput({ displayMode, value, onChange, i18nPrefix }: LevelIn
             const match = NAMED_LEVELS.find((l) => l.key === e.target.value);
             if (match) onChange(match.value);
           }}
-          className="border border-line-strong bg-surface px-2 py-1 text-sm text-ink focus:border-accent focus:outline-none"
+          className="rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none"
         >
           {NAMED_LEVELS.map((l) => (
             <option key={l.key} value={l.key}>

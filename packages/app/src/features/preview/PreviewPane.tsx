@@ -99,8 +99,8 @@ export function PreviewPane() {
   return (
     <div className="flex h-full flex-col">
       {/* Toolbar: page count + zoom controls + rendering status */}
-      <div className="flex shrink-0 items-center justify-between border-b border-line-strong bg-canvas px-2 py-1">
-        <span className="text-xs uppercase tracking-wider text-muted">
+      <div className="flex shrink-0 items-center justify-between border-b border-line bg-canvas/60 px-3 py-1.5 backdrop-blur-sm">
+        <span className="font-mono text-xs tabular-nums text-muted">
           {pageCount > 0 &&
             `${pageCount} ${pageCount === 1 ? t('preview.page') : t('preview.pages')}`}
         </span>
@@ -125,7 +125,7 @@ export function PreviewPane() {
             type="button"
             onClick={zoomOut}
             disabled={activeZoom <= ZOOM_STEPS[0]}
-            className="p-1 text-muted hover:bg-surface hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent"
+            className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent"
             title={t('preview.zoomOut')}
           >
             <svg
@@ -142,7 +142,7 @@ export function PreviewPane() {
           <button
             type="button"
             onClick={zoomReset}
-            className="min-w-12 px-1 py-0.5 text-center text-xs uppercase tracking-wider text-muted hover:bg-surface"
+            className="min-w-12 rounded px-1.5 py-0.5 text-center font-mono text-xs tabular-nums text-muted transition-colors hover:bg-white/[0.06] hover:text-ink"
             title={t('preview.zoomReset')}
           >
             {Math.round(activeZoom * 100)}%
@@ -152,7 +152,7 @@ export function PreviewPane() {
             type="button"
             onClick={zoomIn}
             disabled={activeZoom >= (ZOOM_STEPS.at(-1) ?? activeZoom)}
-            className="p-1 text-muted hover:bg-surface hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent"
+            className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent"
             title={t('preview.zoomIn')}
           >
             <svg

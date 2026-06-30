@@ -12,7 +12,7 @@ export function ListFormHeader({ count, onAdd }: ListFormHeaderProps) {
   return (
     <>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wider text-muted">
+        <span className="text-xs font-medium text-muted">
           {count}{' '}
           {count === 1
             ? t('editor.entry', { defaultValue: 'entry' })
@@ -24,7 +24,7 @@ export function ListFormHeader({ count, onAdd }: ListFormHeaderProps) {
       </div>
 
       {count === 0 && (
-        <div className="py-4 text-center text-xs uppercase tracking-wider text-muted">
+        <div className="py-6 text-center text-sm text-muted/70">
           {t('editor.noEntries', { defaultValue: 'No entries yet.' })}
         </div>
       )}

@@ -36,8 +36,8 @@ export function BasicsForm() {
   const isDataUrl = basics.image?.startsWith('data:');
 
   return (
-    <section className="flex flex-col gap-3 border border-line-strong bg-surface p-3">
-      <h3 className="text-xs font-bold uppercase tracking-wider text-ink">{t('basics.title')}</h3>
+    <section className="flex flex-col gap-3 rounded-lg border border-line-strong bg-surface p-3.5">
+      <h3 className="text-xs font-semibold text-ink">{t('basics.title')}</h3>
 
       {/* Row 1: Name + Job Title */}
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -59,7 +59,7 @@ export function BasicsForm() {
 
       {/* Row 2: Photo upload */}
       <div className="flex flex-col gap-2">
-        <span className="text-xs font-medium uppercase tracking-wider text-muted">
+        <span className="text-xs font-medium text-muted">
           {t('basics.image')}
         </span>
         <div className="flex items-start gap-3">
@@ -67,7 +67,7 @@ export function BasicsForm() {
             <img
               src={basics.image}
               alt={basics.name}
-              className="h-16 w-16 shrink-0 border border-line-strong object-cover"
+              className="h-16 w-16 shrink-0 rounded-md border border-line-strong object-cover"
             />
           )}
           <div className="flex flex-1 flex-col gap-2">
@@ -83,7 +83,7 @@ export function BasicsForm() {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="border border-line-strong bg-surface px-2 py-1 text-xs font-medium uppercase tracking-wider text-ink hover:border-accent"
+              className="self-start rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-ink transition-colors hover:border-white/25 hover:bg-white/[0.06]"
             >
               {t('basics.imageUpload')}
             </button>
@@ -95,7 +95,7 @@ export function BasicsForm() {
                 onChange={(e) => {
                   update({ image: e.target.value });
                 }}
-                className="border border-line-strong bg-surface px-2 py-1 text-sm text-ink focus:border-accent focus:outline-none"
+                className="rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none placeholder:text-muted/70"
               />
             )}
             {hasImage && (
@@ -105,7 +105,7 @@ export function BasicsForm() {
                   update({ image: '' });
                   if (fileInputRef.current) fileInputRef.current.value = '';
                 }}
-                className="self-start text-xs uppercase tracking-wider text-red-500 hover:text-red-400"
+                className="self-start text-xs font-medium text-red transition-colors hover:text-red/80"
               >
                 {t('basics.imageRemove')}
               </button>

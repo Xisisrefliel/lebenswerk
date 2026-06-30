@@ -1,8 +1,8 @@
 import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
 
 const inputBase =
-  'border border-line-strong bg-surface px-2 py-1 text-sm text-ink focus:border-accent focus:outline-none';
-const labelBase = 'text-xs font-medium uppercase tracking-wider text-muted';
+  'rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink placeholder:text-muted/70 transition-colors hover:border-white/25 focus:border-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-blue/40 focus-visible:ring-offset-1 focus-visible:ring-offset-canvas';
+const labelBase = 'text-xs font-medium text-muted';
 
 interface FieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;

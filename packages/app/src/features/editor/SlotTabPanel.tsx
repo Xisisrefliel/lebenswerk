@@ -29,7 +29,7 @@ export function SlotTabPanel({ slotName, slotDef }: SlotTabPanelProps) {
       <SlotOptionsEditor slotName={slotName} />
 
       {assignments.length === 0 && (
-        <div className="border border-dashed border-line-strong p-4 text-center text-xs uppercase tracking-wider text-muted">
+        <div className="rounded-lg border border-dashed border-line-strong p-6 text-center text-sm text-muted/70">
           {t('editor.emptySlot')}
         </div>
       )}
@@ -42,10 +42,10 @@ export function SlotTabPanel({ slotName, slotDef }: SlotTabPanelProps) {
         return (
           <div
             key={`${assignment.componentId}-${idx}`}
-            className="border border-line-strong bg-surface"
+            className="overflow-hidden rounded-lg border border-line-strong bg-surface transition-colors hover:border-white/20"
           >
-            <div className="flex items-center justify-between border-b border-line px-3 py-2">
-              <span className="text-sm font-semibold text-ink">{label}</span>
+            <div className="flex items-center justify-between border-b border-line px-3 py-2.5">
+              <span className="text-sm font-medium text-ink">{label}</span>
               <div className="flex items-center gap-1">
                 <button
                   type="button"
@@ -53,7 +53,7 @@ export function SlotTabPanel({ slotName, slotDef }: SlotTabPanelProps) {
                   onClick={() => {
                     moveComponent(slotName, idx, idx - 1);
                   }}
-                  className="p-0.5 text-muted hover:text-ink disabled:opacity-30"
+                  className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink disabled:opacity-30"
                   title={t('designer.moveUp')}
                 >
                   <svg
@@ -73,7 +73,7 @@ export function SlotTabPanel({ slotName, slotDef }: SlotTabPanelProps) {
                   onClick={() => {
                     moveComponent(slotName, idx, idx + 1);
                   }}
-                  className="p-0.5 text-muted hover:text-ink disabled:opacity-30"
+                  className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink disabled:opacity-30"
                   title={t('designer.moveDown')}
                 >
                   <svg
@@ -92,7 +92,7 @@ export function SlotTabPanel({ slotName, slotDef }: SlotTabPanelProps) {
                   onClick={() => {
                     toggleComponent(slotName, assignment.componentId);
                   }}
-                  className="p-0.5 text-muted hover:text-red-500"
+                  className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-red"
                   title={t('designer.remove')}
                 >
                   <svg
@@ -128,7 +128,7 @@ export function SlotTabPanel({ slotName, slotDef }: SlotTabPanelProps) {
 
       {addableComponents.length > 0 && (
         <select
-          className="border border-dashed border-line-strong bg-surface px-2 py-1 text-xs uppercase tracking-wider text-muted hover:border-accent"
+          className="w-full appearance-none rounded-lg border border-dashed border-line-strong bg-white/[0.02] px-3 py-2 text-sm text-muted transition-colors hover:border-white/25 hover:text-ink focus:border-blue focus:outline-none"
           value=""
           onChange={(e) => {
             if (e.target.value) toggleComponent(slotName, e.target.value);

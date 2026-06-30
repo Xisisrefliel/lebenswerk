@@ -35,10 +35,10 @@ export function RichTextField({ label, value, onChange }: RichTextFieldProps) {
 
   return (
     <div className="flex flex-col gap-1 text-sm">
-      <span className="text-xs font-medium uppercase tracking-wider text-muted">{label}</span>
-      <div className="border border-line-strong bg-surface focus-within:border-accent">
+      <span className="text-xs font-medium text-muted">{label}</span>
+      <div className="overflow-hidden rounded-md border border-line-strong bg-white/[0.03] transition-colors focus-within:border-blue focus-within:ring-2 focus-within:ring-blue/30">
         {/* Toolbar */}
-        <div className="flex gap-0.5 border-b border-line px-1 py-0.5">
+        <div className="flex gap-0.5 border-b border-line bg-white/[0.02] px-1.5 py-1">
           <ToolbarButton
             active={editor.isActive('bold')}
             onClick={() => editor.chain().focus().toggleBold().run()}
@@ -71,7 +71,7 @@ export function RichTextField({ label, value, onChange }: RichTextFieldProps) {
         {/* Editor */}
         <EditorContent
           editor={editor}
-          className="max-w-none px-2 py-1 text-sm text-ink [&_.ProseMirror]:min-h-15 [&_.ProseMirror]:outline-none"
+          className="max-w-none px-2.5 py-1.5 text-sm text-ink [&_.ProseMirror]:min-h-15 [&_.ProseMirror]:outline-none"
         />
       </div>
     </div>
@@ -91,8 +91,8 @@ function ToolbarButton({ active, onClick, title, children }: ToolbarButtonProps)
       type="button"
       onClick={onClick}
       title={title}
-      className={`px-2 py-0.5 text-xs font-semibold ${
-        active ? 'bg-accent text-black' : 'text-muted hover:bg-canvas hover:text-ink'
+      className={`rounded px-2 py-0.5 text-xs font-semibold transition-colors ${
+        active ? 'bg-white/[0.12] text-ink' : 'text-muted hover:bg-white/[0.06] hover:text-ink'
       }`}
     >
       {children}

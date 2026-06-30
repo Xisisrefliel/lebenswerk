@@ -42,7 +42,7 @@ export function PhotoForm({ slotName, componentId }: SlotFormProps) {
           <img
             src={basics.image}
             alt={basics.name}
-            className="h-16 w-16 shrink-0 border border-line-strong object-cover"
+            className="h-16 w-16 shrink-0 rounded-md border border-line-strong object-cover"
           />
         )}
         <div className="flex flex-1 flex-col gap-2">
@@ -66,7 +66,7 @@ export function PhotoForm({ slotName, componentId }: SlotFormProps) {
               onChange={(e) => {
                 update(e.target.value);
               }}
-              className="border border-line-strong bg-surface px-2 py-1 text-sm text-ink focus:border-accent focus:outline-none"
+              className="rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none placeholder:text-muted/70"
             />
           )}
           {hasImage && (
@@ -87,7 +87,7 @@ export function PhotoForm({ slotName, componentId }: SlotFormProps) {
 
       {/* Shape */}
       <div className="flex flex-col gap-1">
-        <span className="text-xs font-medium uppercase tracking-wider text-muted">
+        <span className="text-xs font-medium text-muted">
           {t('photo.shape')}
         </span>
         <ToggleGroup
@@ -103,7 +103,7 @@ export function PhotoForm({ slotName, componentId }: SlotFormProps) {
 
       {/* Size */}
       <div className="flex flex-col gap-1">
-        <span className="text-xs font-medium uppercase tracking-wider text-muted">
+        <span className="text-xs font-medium text-muted">
           {t('photo.size')}
         </span>
         <ToggleGroup

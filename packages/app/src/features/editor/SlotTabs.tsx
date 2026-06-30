@@ -55,7 +55,7 @@ function TabBar({
   t: ReturnType<typeof useTranslation>['t'];
 }) {
   return (
-    <div className="flex border border-line-strong bg-surface">
+    <div className="inline-flex items-center gap-0.5 rounded-lg border border-line-strong bg-white/[0.03] p-0.5">
       {tabs.map((name) => (
         <button
           key={name}
@@ -63,8 +63,10 @@ function TabBar({
           onClick={() => {
             onTabChange(name);
           }}
-          className={`flex-1 border-r border-line-strong px-3 py-1.5 text-xs font-medium uppercase tracking-wider transition-colors last:border-r-0 ${
-            activeTab === name ? 'bg-accent text-black' : 'text-muted hover:text-ink'
+          className={`rounded-md px-3 py-1.5 text-xs font-medium transition-all duration-150 ${
+            activeTab === name
+              ? 'bg-white/[0.1] text-ink shadow-sm'
+              : 'text-muted hover:text-ink hover:bg-white/[0.04]'
           }`}
         >
           {name === SETTINGS_TAB ? t('tabs.settings') : t(`slots.${name}`, { defaultValue: name })}

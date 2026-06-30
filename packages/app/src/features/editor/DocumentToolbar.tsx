@@ -34,10 +34,10 @@ export function DocumentToolbar() {
 
   return (
     <>
-      <div className="flex shrink-0 flex-wrap items-center gap-2 overflow-x-auto border-b border-line-strong bg-canvas px-2 py-1 sm:gap-2">
+      <div className="flex shrink-0 flex-wrap items-center gap-2 overflow-x-auto border-b border-line bg-canvas/60 px-3 py-2 backdrop-blur-sm sm:gap-2.5">
         {/* Design selector with label */}
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium uppercase tracking-wider text-muted">
+          <span className="text-xs font-medium text-muted">
             {t('toolbar.design')}
           </span>
           <div className="relative">
@@ -46,7 +46,7 @@ export function DocumentToolbar() {
               onChange={(e) => {
                 applyDesign(e.target.value);
               }}
-              className="appearance-none border border-line-strong bg-surface py-1 pl-2 pr-8 text-sm font-medium text-ink focus:border-accent focus:outline-none"
+              className="appearance-none rounded-md border border-line-strong bg-white/[0.03] py-1.5 pl-2.5 pr-8 text-sm font-medium text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-blue/40"
             >
               {designs.map((d) => (
                 <option key={d.id} value={d.id}>
@@ -68,7 +68,7 @@ export function DocumentToolbar() {
 
         {/* Document language with label */}
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium uppercase tracking-wider text-muted">
+          <span className="text-xs font-medium text-muted">
             {t('toolbar.language')}
           </span>
           <div className="relative">
@@ -77,7 +77,7 @@ export function DocumentToolbar() {
               onChange={(e) => {
                 setDocumentLocale(e.target.value as Locale);
               }}
-              className="appearance-none border border-line-strong bg-surface py-1 pl-2 pr-8 text-sm text-ink focus:border-accent focus:outline-none"
+              className="appearance-none rounded-md border border-line-strong bg-white/[0.03] py-1.5 pl-2.5 pr-8 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-blue/40"
             >
               {localeOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -103,7 +103,7 @@ export function DocumentToolbar() {
           onClick={() => {
             setDesignEditorOpen(true);
           }}
-          className="flex items-center gap-1.5 border border-line-strong bg-surface px-2.5 py-1 text-xs font-medium uppercase tracking-wider text-ink hover:border-accent"
+          className="flex items-center gap-1.5 rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-ink transition-colors hover:border-white/25 hover:bg-white/[0.06]"
         >
           <svg
             className="h-4 w-4"
@@ -140,7 +140,7 @@ export function DocumentToolbar() {
       {designEditorOpen && (
         <div
           role="presentation"
-          className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 pt-20"
+          className="cv-overlay fixed inset-0 z-50 flex items-start justify-center bg-black/60 pt-20"
           onClick={(e) => {
             if (e.target === e.currentTarget) setDesignEditorOpen(false);
           }}
@@ -148,9 +148,9 @@ export function DocumentToolbar() {
             if (e.key === 'Escape') setDesignEditorOpen(false);
           }}
         >
-          <div className="max-h-[70vh] w-full max-w-lg overflow-y-auto border-2 border-line-strong bg-surface p-4">
+          <div className="max-h-[70vh] w-full max-w-lg overflow-y-auto rounded-xl border border-line-strong bg-surface-2 p-5 shadow-lg">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-ink">
+              <h2 className="text-sm font-semibold text-ink">
                 {t('toolbar.customizeTitle')}
               </h2>
               <button
@@ -158,7 +158,7 @@ export function DocumentToolbar() {
                 onClick={() => {
                   setDesignEditorOpen(false);
                 }}
-                className="p-1 text-muted hover:text-ink"
+                className="rounded-md p-1.5 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink"
               >
                 <svg
                   width="18"

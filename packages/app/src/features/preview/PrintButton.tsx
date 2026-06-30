@@ -7,7 +7,7 @@ export function PrintButton() {
     <button
       type="button"
       onClick={triggerPreviewPrint}
-      className="bg-accent px-2 py-1 text-xs font-bold uppercase tracking-wider text-black hover:bg-accent/90"
+      className="rounded-md bg-accent px-3 py-1.5 text-xs font-semibold text-black shadow-sm transition-all hover:bg-white/90 active:bg-white/80"
     >
       {t('actions.exportPdf')}
     </button>

@@ -13,7 +13,7 @@ export function ParagraphList() {
 
   return (
     <div className="flex flex-col gap-3">
-      <span className="text-xs font-medium uppercase tracking-wider text-muted">
+      <span className="text-xs font-medium text-muted">
         {t('coverLetterEditor.paragraphs')}
       </span>
       {paragraphs.map((p, i) => (
@@ -25,7 +25,7 @@ export function ParagraphList() {
               onClick={() => {
                 moveParagraph(i, i - 1);
               }}
-              className="p-0.5 text-muted hover:text-ink disabled:opacity-30"
+              className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink disabled:opacity-30"
               title={t('designer.moveUp')}
             >
               <svg
@@ -45,7 +45,7 @@ export function ParagraphList() {
               onClick={() => {
                 moveParagraph(i, i + 1);
               }}
-              className="p-0.5 text-muted hover:text-ink disabled:opacity-30"
+              className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink disabled:opacity-30"
               title={t('designer.moveDown')}
             >
               <svg
@@ -64,7 +64,7 @@ export function ParagraphList() {
               onClick={() => {
                 removeParagraph(i);
               }}
-              className="p-0.5 text-muted hover:text-red-500"
+              className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-red"
               title={t('coverLetterEditor.removeParagraph')}
             >
               <svg

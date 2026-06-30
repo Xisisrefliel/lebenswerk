@@ -37,7 +37,7 @@ export function LetterPhotoForm({ slotName, componentId }: SlotFormProps) {
           <img
             src={image}
             alt=""
-            className="h-12 w-12 shrink-0 border border-line-strong object-cover"
+            className="h-12 w-12 shrink-0 rounded-md border border-line-strong object-cover"
           />
         )}
         <div className="flex flex-1 flex-col gap-2">
@@ -70,7 +70,7 @@ export function LetterPhotoForm({ slotName, componentId }: SlotFormProps) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <span className="text-xs font-medium uppercase tracking-wider text-muted">
+        <span className="text-xs font-medium text-muted">
           {t('photo.shape')}
         </span>
         <ToggleGroup

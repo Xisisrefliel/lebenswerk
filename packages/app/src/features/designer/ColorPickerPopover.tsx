@@ -42,21 +42,21 @@ export function ColorPickerPopover({ label, value, onChange }: ColorPickerPopove
         className="flex items-center gap-2 text-sm"
       >
         <span
-          className="block h-7 w-7 border border-line-strong"
+          className="block h-7 w-7 rounded-md border border-line-strong shadow-sm"
           style={{ backgroundColor: value }}
         />
         <span className="text-ink">{label}</span>
       </button>
 
       {open && (
-        <div className="absolute left-0 z-50 mt-2 flex flex-col gap-2 border-2 border-line-strong bg-surface p-3">
+        <div className="absolute left-0 z-50 mt-2 flex flex-col gap-2 rounded-lg border border-line-strong bg-surface-2 p-3 shadow-lg">
           <HexColorPicker color={value} onChange={onChange} style={{ width: 200, height: 160 }} />
           <div className="flex items-center gap-1 text-sm">
             <span className="text-muted">#</span>
             <HexColorInput
               color={value}
               onChange={onChange}
-              className="w-full border border-line-strong bg-canvas px-2 py-1 text-sm text-ink"
+              className="w-full rounded-md border border-line-strong bg-canvas px-2 py-1 text-sm text-ink focus:border-blue focus:outline-none"
             />
           </div>
         </div>

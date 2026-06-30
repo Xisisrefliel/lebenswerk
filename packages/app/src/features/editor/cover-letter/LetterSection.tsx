@@ -7,8 +7,8 @@ interface LetterSectionProps {
 
 export function LetterSection({ title, children }: LetterSectionProps) {
   return (
-    <section className="flex flex-col gap-3 border border-line-strong bg-surface p-3">
-      <h3 className="text-xs font-bold uppercase tracking-wider text-ink">{title}</h3>
+    <section className="flex flex-col gap-3 rounded-lg border border-line-strong bg-surface p-3.5">
+      <h3 className="text-xs font-semibold text-ink">{title}</h3>
       {children}
     </section>
   );

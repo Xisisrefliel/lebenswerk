@@ -108,7 +108,7 @@ export function SkillsForm({ slotName, componentId }: SlotFormProps) {
       )}
 
       {resume.skills.length === 0 && (
-        <div className="py-4 text-center text-xs uppercase tracking-wider text-muted">
+        <div className="py-6 text-center text-sm text-muted/70">
           {t('editor.noEntries', { defaultValue: 'No entries yet.' })}
         </div>
       )}
@@ -118,7 +118,7 @@ export function SkillsForm({ slotName, componentId }: SlotFormProps) {
           isGroup(skill) ? (
             <div
               key={skill.id}
-              className="flex flex-col gap-2 border border-line-strong bg-canvas p-3"
+              className="flex flex-col gap-2.5 rounded-lg border border-line-strong bg-white/[0.02] p-3.5"
             >
               <div className="flex items-end gap-2">
                 <div className="flex-1">
@@ -152,14 +152,14 @@ export function SkillsForm({ slotName, componentId }: SlotFormProps) {
                         patchChild(skill.id, child.id, { name: e.target.value });
                       }}
                       placeholder={t('skills.childPlaceholder')}
-                      className="min-w-0 flex-1 border border-line-strong bg-surface px-2 py-1 text-sm text-ink focus:border-accent focus:outline-none"
+                      className="min-w-0 flex-1 rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none placeholder:text-muted/70"
                     />
                     <button
                       type="button"
                       onClick={() => {
                         removeChild(skill.id, child.id);
                       }}
-                      className="shrink-0 p-0.5 text-muted transition-colors hover:text-red-500"
+                      className="shrink-0 rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-red"
                     >
                       &times;
                     </button>

@@ -9,7 +9,7 @@ export function Select({ label, options, className = '', ...rest }: SelectProps)
   const select = (
     <div className="relative">
       <select
-        className={`w-full appearance-none border border-line-strong bg-surface py-1 pl-2 pr-8 text-sm text-ink focus:border-accent focus:outline-none ${className}`}
+        className={`w-full appearance-none rounded-md border border-line-strong bg-white/[0.03] py-1.5 pl-2.5 pr-8 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-blue/40 focus-visible:ring-offset-1 focus-visible:ring-offset-canvas ${className}`}
         {...rest}
       >
         {options.map((opt) => (
@@ -34,7 +34,7 @@ export function Select({ label, options, className = '', ...rest }: SelectProps)
 
   return (
     <label className="flex flex-col gap-1 text-sm">
-      <span className="text-xs font-medium uppercase tracking-wider text-muted">{label}</span>
+      <span className="text-xs font-medium text-muted">{label}</span>
       {select}
     </label>
   );

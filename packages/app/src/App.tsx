@@ -38,7 +38,7 @@ export function App() {
       {clearDialogOpen && (
         <div
           role="presentation"
-          className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 pt-20"
+          className="cv-overlay fixed inset-0 z-50 flex items-start justify-center bg-black/60 pt-24"
           onClick={(e) => {
             if (e.target === e.currentTarget) setClearDialogOpen(false);
           }}
@@ -46,8 +46,8 @@ export function App() {
             if (e.key === 'Escape') setClearDialogOpen(false);
           }}
         >
-          <div className="w-full max-w-sm border-2 border-line-strong bg-surface p-4">
-            <div className="mb-3 flex items-center gap-2 text-red-500">
+          <div className="w-full max-w-sm rounded-xl border border-line-strong bg-surface-2 p-5 shadow-lg">
+            <div className="mb-3 flex items-center gap-2.5 text-red">
               <svg className="h-5 w-5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path
                   fillRule="evenodd"
@@ -55,25 +55,25 @@ export function App() {
                   clipRule="evenodd"
                 />
               </svg>
-              <h2 className="text-sm font-bold uppercase tracking-wider">
+              <h2 className="text-sm font-semibold text-ink">
                 {t('actions.clearAllTitle')}
               </h2>
             </div>
-            <p className="mb-4 text-xs text-muted">{t('actions.clearAllConfirm')}</p>
-            <div className="flex justify-end gap-1">
+            <p className="mb-5 text-sm text-muted">{t('actions.clearAllConfirm')}</p>
+            <div className="flex justify-end gap-2">
               <button
                 type="button"
                 onClick={() => {
                   setClearDialogOpen(false);
                 }}
-                className="border border-line-strong px-2 py-1 text-xs uppercase tracking-wider text-ink hover:border-accent"
+                className="rounded-md border border-line-strong px-3 py-1.5 text-xs font-medium text-ink transition-colors hover:bg-white/[0.05]"
               >
                 {t('actions.clearAllCancel')}
               </button>
               <button
                 type="button"
                 onClick={handleClearAll}
-                className="bg-red-500 px-2 py-1 text-xs font-bold uppercase tracking-wider text-black hover:bg-red-400"
+                className="rounded-md bg-red px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-red/90"
               >
                 {t('actions.clearAll')}
               </button>
@@ -83,14 +83,21 @@ export function App() {
       )}
 
       {/* App header */}
-      <header className="flex shrink-0 items-center justify-between gap-2 border-b border-line-strong bg-canvas px-2 py-1 sm:gap-3">
-        <h1 className="min-w-0 truncate text-xs font-bold uppercase tracking-wider text-ink sm:text-sm">
-          {t('app.title')}
-        </h1>
+      <header className="flex shrink-0 items-center justify-between gap-2 border-b border-line bg-canvas/80 px-3 py-2 backdrop-blur-md sm:gap-3">
+        <div className="flex items-center gap-2">
+          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-white/[0.06]">
+            <svg className="h-3.5 w-3.5 text-ink" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M2 2h5.5v5.5H2V2zm6.5 0H14v5.5H8.5V2zM2 8.5h5.5V14H2V8.5zm6.5 0H14V14H8.5V8.5z" />
+            </svg>
+          </div>
+          <h1 className="min-w-0 truncate text-sm font-semibold text-ink">
+            {t('app.title')}
+          </h1>
+        </div>
 
-        <div className="flex shrink-0 items-center gap-1">
+        <div className="flex shrink-0 items-center gap-1.5">
           {/* Desktop-only actions */}
-          <div className="hidden md:flex md:items-center md:gap-1">
+          <div className="hidden items-center gap-1.5 md:flex">
             <IoButtons />
 
             {/* Clear all data */}
@@ -99,7 +106,7 @@ export function App() {
               onClick={() => {
                 setClearDialogOpen(true);
               }}
-              className="border border-red-500 px-2 py-1 text-xs font-medium uppercase tracking-wider text-red-500 hover:bg-red-500 hover:text-black"
+              className="rounded-md border border-red/40 px-2.5 py-1.5 text-xs font-medium text-red transition-colors hover:bg-red hover:text-white hover:border-red"
             >
               {t('actions.clearAll')}
             </button>
@@ -108,11 +115,11 @@ export function App() {
             <button
               type="button"
               onClick={toggleLocale}
-              className="flex items-center gap-1 border border-line-strong bg-surface px-2 py-1 text-xs font-medium uppercase tracking-wider text-muted hover:border-accent hover:text-ink"
+              className="flex items-center gap-1.5 rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-muted transition-colors hover:border-white/25 hover:text-ink"
               title={t('settings.uiLocale')}
             >
               <svg
-                className="h-4 w-4"
+                className="h-3.5 w-3.5"
                 viewBox="0 0 16 16"
                 fill="none"
                 stroke="currentColor"
@@ -130,7 +137,7 @@ export function App() {
           <button
             type="button"
             onClick={triggerPreviewPrint}
-            className="bg-accent px-2 py-1 text-xs font-bold uppercase tracking-wider text-black hover:bg-accent/90"
+            className="rounded-md bg-accent px-3 py-1.5 text-xs font-semibold text-black shadow-sm transition-all hover:bg-white/90 active:bg-white/80"
           >
             {t('actions.downloadPdf')}
           </button>
@@ -141,7 +148,7 @@ export function App() {
             onClick={() => {
               setMenuOpen((v) => !v);
             }}
-            className="border border-line-strong p-1.5 text-muted hover:border-accent hover:text-ink md:hidden"
+            className="rounded-md border border-line-strong p-2 text-muted transition-colors hover:bg-white/[0.05] hover:text-ink md:hidden"
             aria-label="Menu"
           >
             {menuOpen ? (
@@ -171,8 +178,8 @@ export function App() {
 
       {/* Mobile dropdown menu */}
       {menuOpen && (
-        <div className="flex flex-col gap-1 border-b border-line-strong bg-canvas px-2 py-2 md:hidden">
-          <div className="flex gap-1">
+        <div className="flex flex-col gap-1.5 border-b border-line bg-canvas/95 px-3 py-2.5 backdrop-blur-md md:hidden">
+          <div className="flex flex-wrap gap-1.5">
             <IoButtons />
           </div>
           <button
@@ -181,7 +188,7 @@ export function App() {
               setClearDialogOpen(true);
               setMenuOpen(false);
             }}
-            className="border border-red-500 px-2 py-1 text-xs font-medium uppercase tracking-wider text-red-500 hover:bg-red-500 hover:text-black"
+            className="rounded-md border border-red/40 px-2.5 py-1.5 text-xs font-medium text-red transition-colors hover:bg-red hover:text-white hover:border-red"
           >
             {t('actions.clearAll')}
           </button>
@@ -191,10 +198,10 @@ export function App() {
               toggleLocale();
               setMenuOpen(false);
             }}
-            className="flex items-center justify-center gap-1.5 border border-line-strong bg-surface px-2 py-1 text-xs font-medium uppercase tracking-wider text-muted hover:border-accent hover:text-ink"
+            className="flex items-center justify-center gap-1.5 rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-muted transition-colors hover:border-white/25 hover:text-ink"
           >
             <svg
-              className="h-4 w-4"
+              className="h-3.5 w-3.5"
               viewBox="0 0 16 16"
               fill="none"
               stroke="currentColor"
@@ -215,7 +222,7 @@ export function App() {
       {/* Two-column layout: editor + preview */}
       <div className="flex flex-col p-0 lg:min-h-0 lg:flex-1 lg:flex-row lg:p-0">
         <section
-          className={`min-w-0 p-2 lg:min-h-0 lg:basis-1/2 lg:overflow-y-auto lg:scrollbar-none lg:p-3 ${previewVisible ? 'hidden lg:block' : ''}`}
+          className={`min-w-0 p-3 lg:min-h-0 lg:basis-1/2 lg:overflow-y-auto lg:scrollbar-none lg:p-4 ${previewVisible ? 'hidden lg:block' : ''}`}
         >
           <div className="flex flex-col gap-3">
             <ResumeEditor />
@@ -223,7 +230,7 @@ export function App() {
         </section>
 
         <section
-          className={`min-w-0 overflow-hidden border border-line-strong bg-canvas lg:min-h-0 lg:basis-1/2 ${previewVisible ? '' : 'h-0 lg:h-auto'}`}
+          className={`min-w-0 overflow-hidden border-t border-line bg-canvas lg:min-h-0 lg:basis-1/2 lg:border-t-0 lg:border-l ${previewVisible ? '' : 'h-0 lg:h-auto'}`}
         >
           <PreviewPane />
         </section>
@@ -235,7 +242,7 @@ export function App() {
         onClick={() => {
           setPreviewVisible((v) => !v);
         }}
-        className="fixed bottom-4 right-4 z-40 flex h-12 w-12 items-center justify-center bg-accent text-black hover:bg-accent/90 lg:hidden"
+        className="fixed bottom-5 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-accent text-black shadow-lg transition-all hover:bg-white/90 active:scale-95 lg:hidden"
         title={previewVisible ? t('preview.showEditor') : t('preview.showPreview')}
       >
         {previewVisible ? (

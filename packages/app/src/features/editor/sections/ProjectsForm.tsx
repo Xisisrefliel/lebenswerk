@@ -88,7 +88,7 @@ export function ProjectsForm(props: SlotFormProps) {
                 }}
               />
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium uppercase tracking-wider text-muted">
+                <label className="text-xs font-medium text-muted">
                   {t('projects.keywords')}
                 </label>
                 <TagInput

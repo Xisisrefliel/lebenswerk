@@ -17,7 +17,7 @@ export function ListItemCard({
   const [open, setOpen] = useState(defaultOpen);
 
   const header = (
-    <div className="flex items-center gap-2 py-2">
+    <div className="flex items-center gap-2 py-2.5">
       <svg
         className={`h-4 w-4 shrink-0 text-muted transition-transform duration-200 ${open ? 'rotate-90' : ''}`}
         viewBox="0 0 16 16"
@@ -34,7 +34,7 @@ export function ListItemCard({
           e.stopPropagation();
           onRemove();
         }}
-        className="shrink-0 p-0.5 text-muted transition-colors hover:text-red-500"
+        className="shrink-0 rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-red"
         title="Remove"
       >
         <svg
@@ -60,7 +60,7 @@ export function ListItemCard({
         }}
         header={header}
       >
-        <div className="pb-2 pl-4">{children}</div>
+        <div className="pb-3 pl-5">{children}</div>
       </Collapsible>
     </div>
   );

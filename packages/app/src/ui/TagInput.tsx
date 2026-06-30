@@ -32,11 +32,11 @@ export function TagInput({ tags, onChange, placeholder }: TagInputProps) {
   };
 
   return (
-    <label className="flex flex-wrap items-center gap-1 border border-line-strong bg-surface px-2 py-1 text-sm text-ink focus-within:border-accent">
+    <label className="flex flex-wrap items-center gap-1.5 rounded-md border border-line-strong bg-white/[0.03] px-2 py-1.5 text-sm text-ink transition-colors focus-within:border-blue focus-within:ring-2 focus-within:ring-blue/30">
       {tags.map((tag, i) => (
         <span
           key={`${tag}-${i}`}
-          className="flex items-center gap-0.5 border border-line-strong px-1.5 py-0.5 text-xs text-ink"
+          className="flex items-center gap-1 rounded bg-white/[0.08] px-1.5 py-0.5 text-xs text-ink"
         >
           {tag}
           <button
@@ -45,7 +45,7 @@ export function TagInput({ tags, onChange, placeholder }: TagInputProps) {
               e.stopPropagation();
               removeTag(i);
             }}
-            className="ml-0.5 text-muted hover:text-red-500"
+            className="ml-0.5 text-muted transition-colors hover:text-red"
           >
             &times;
           </button>
@@ -63,7 +63,7 @@ export function TagInput({ tags, onChange, placeholder }: TagInputProps) {
           if (input.trim()) addTag(input);
         }}
         placeholder={tags.length === 0 ? placeholder : ''}
-        className="min-w-20 flex-1 border-0 bg-transparent p-0 text-sm outline-none placeholder:text-muted"
+        className="min-w-20 flex-1 border-0 bg-transparent p-0 text-sm outline-none placeholder:text-muted/70"
       />
     </label>
   );

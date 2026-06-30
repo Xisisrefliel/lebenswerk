@@ -240,12 +240,12 @@ export function CoverLetterEditor() {
         />
 
         <div className="flex flex-col gap-2 text-sm">
-          <span className="text-xs font-medium uppercase tracking-wider text-muted">
+          <span className="text-xs font-medium text-muted">
             {t('coverLetterEditor.signatureImage')}
           </span>
           {cl.signatureImage ? (
             <div className="flex items-center gap-3">
-              <img src={cl.signatureImage} alt="" className="h-10 border border-line-strong" />
+              <img src={cl.signatureImage} alt="" className="h-10 rounded border border-line-strong" />
               <Button
                 variant="danger"
                 size="sm"

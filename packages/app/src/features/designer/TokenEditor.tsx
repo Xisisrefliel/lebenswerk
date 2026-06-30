@@ -10,9 +10,9 @@ import { ColorPickerPopover } from './ColorPickerPopover.js';
 
 function SettingsSection({ title, children }: { title?: string; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-2.5 border border-line-strong bg-surface p-3">
+    <div className="flex flex-col gap-2.5 rounded-lg border border-line-strong bg-surface p-3.5">
       {title && (
-        <h4 className="text-xs font-semibold uppercase tracking-wider text-muted">{title}</h4>
+        <h4 className="text-xs font-semibold text-muted">{title}</h4>
       )}
       {children}
     </div>
@@ -58,7 +58,7 @@ export function TokenEditor() {
                 onClick={() => {
                   applyPalette(palette.colors);
                 }}
-                className="flex h-6 w-6 overflow-hidden border border-line-strong transition-transform hover:scale-110 hover:border-accent"
+                className="flex h-6 w-6 overflow-hidden rounded-md border border-line-strong transition-all hover:scale-110 hover:border-white/40"
                 title={t(`designer.palette_${palette.id}`, { defaultValue: palette.id })}
               >
                 <span

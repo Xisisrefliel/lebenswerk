@@ -23,7 +23,7 @@ export function SlotOptionsEditor({ slotName }: SlotOptionsEditorProps) {
   if (!slotDef?.options || Object.keys(slotDef.options).length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-2 border border-line-strong bg-surface p-3">
+    <div className="flex flex-col gap-2.5 rounded-lg border border-line-strong bg-surface p-3.5">
       {Object.entries(slotDef.options).map(([, decl]: [string, OptionDeclaration]) => {
         const resolvedKey = `${slotName}.${decl.key}`;
         const rawValue = resolvedOptions[resolvedKey];
@@ -37,7 +37,7 @@ export function SlotOptionsEditor({ slotName }: SlotOptionsEditorProps) {
 
           return (
             <div key={decl.key} className="flex items-center justify-between gap-2">
-              <span className="text-xs font-medium uppercase tracking-wider text-muted">
+              <span className="text-xs font-medium text-muted">
                 {decl.label[uiLocale]}
               </span>
               <ToggleGroup
@@ -54,7 +54,7 @@ export function SlotOptionsEditor({ slotName }: SlotOptionsEditorProps) {
         const rangeValue = typeof rawValue === 'number' ? rawValue : decl.default;
         return (
           <div key={decl.key} className="flex items-center justify-between gap-2">
-            <span className="text-xs font-medium uppercase tracking-wider text-muted">
+            <span className="text-xs font-medium text-muted">
               {decl.label[uiLocale]}
             </span>
             <div className="flex items-center gap-2">
@@ -67,9 +67,9 @@ export function SlotOptionsEditor({ slotName }: SlotOptionsEditorProps) {
                 onChange={(e) => {
                   setSlotOption(slotName, decl.key, Number(e.target.value));
                 }}
-                className="w-20 accent-accent"
+                className="w-20 accent-blue"
               />
-              <span className="w-10 text-right text-xs text-muted">
+              <span className="w-10 text-right font-mono text-xs tabular-nums text-muted">
                 {String(rangeValue)}
                 {decl.unit}
               </span>

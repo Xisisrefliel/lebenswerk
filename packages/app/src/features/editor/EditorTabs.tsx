@@ -293,7 +293,7 @@ function ComponentCard({
   const isLast = assignedIdx === assignments.length - 1;
 
   const header = (
-    <div className={`flex items-center gap-2 px-3 py-2 ${!enabled ? 'opacity-50' : ''}`}>
+    <div className={`flex items-center gap-2 px-3 py-2.5 ${!enabled ? 'opacity-50' : ''}`}>
       <svg
         className={`h-4 w-4 shrink-0 text-muted transition-transform duration-200 ${open && enabled ? 'rotate-90' : ''}`}
         viewBox="0 0 16 16"
@@ -303,7 +303,7 @@ function ComponentCard({
       >
         <path d="M6 4l4 4-4 4" />
       </svg>
-      <span className="flex-1 text-sm font-semibold text-ink">{label}</span>
+      <span className="flex-1 text-sm font-medium text-ink">{label}</span>
       <div
         role="toolbar"
         className="flex items-center gap-1"
@@ -323,7 +323,7 @@ function ComponentCard({
               onClick={() => {
                 onMove(-1);
               }}
-              className="p-0.5 text-muted hover:text-ink disabled:opacity-30"
+              className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink disabled:opacity-30"
               title={t('designer.moveUp')}
             >
               <svg
@@ -343,7 +343,7 @@ function ComponentCard({
               onClick={() => {
                 onMove(1);
               }}
-              className="p-0.5 text-muted hover:text-ink disabled:opacity-30"
+              className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink disabled:opacity-30"
               title={t('designer.moveDown')}
             >
               <svg
@@ -366,7 +366,7 @@ function ComponentCard({
   );
 
   return (
-    <div className="border border-line-strong bg-surface">
+    <div className="overflow-hidden rounded-lg border border-line-strong bg-surface transition-colors hover:border-white/20">
       <Collapsible
         open={open && enabled}
         onToggle={() => {

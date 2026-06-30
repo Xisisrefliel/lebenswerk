@@ -96,7 +96,7 @@ export function LetterContactForm({ slotName, componentId }: SlotFormProps) {
 
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-medium uppercase tracking-wider text-muted">
+          <span className="text-xs font-medium text-muted">
             {t('contact.profiles')}
           </span>
           <Button variant="ghost" size="sm" onClick={addProfile}>
@@ -104,7 +104,7 @@ export function LetterContactForm({ slotName, componentId }: SlotFormProps) {
           </Button>
         </div>
         {profiles.map((p, idx) => (
-          <div key={idx} className="flex flex-col gap-2 border border-line-strong bg-canvas p-2">
+          <div key={idx} className="flex flex-col gap-2 rounded-lg border border-line-strong bg-white/[0.02] p-3">
             <div className="flex items-end gap-2">
               <Select
                 label={t('contact.network')}
@@ -129,7 +129,7 @@ export function LetterContactForm({ slotName, componentId }: SlotFormProps) {
                 onClick={() => {
                   removeProfile(idx);
                 }}
-                className="mb-1 shrink-0 p-0.5 text-muted transition-colors hover:text-red-500"
+                className="mb-1 shrink-0 rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-red"
               >
                 &times;
               </button>

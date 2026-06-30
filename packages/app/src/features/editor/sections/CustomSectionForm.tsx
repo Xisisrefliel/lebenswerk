@@ -65,7 +65,7 @@ export function CustomSectionForm(props: SlotFormProps) {
       {resume.custom.map((section) => (
         <div
           key={section.id}
-          className="flex flex-col gap-2 border border-line-strong bg-canvas p-3"
+          className="flex flex-col gap-2.5 rounded-lg border border-line-strong bg-white/[0.02] p-3.5"
         >
           <div className="flex items-end gap-2">
             <div className="flex-1">
@@ -106,7 +106,7 @@ export function CustomSectionForm(props: SlotFormProps) {
                   onClick={() => {
                     removeItem(section.id, item.id);
                   }}
-                  className="mb-1 shrink-0 p-0.5 text-muted transition-colors hover:text-red-500"
+                  className="mb-1 shrink-0 rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-red"
                 >
                   &times;
                 </button>

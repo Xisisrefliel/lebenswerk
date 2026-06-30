@@ -18,19 +18,19 @@ export function Toggle({ checked, onChange, label, disabled = false }: TogglePro
         onClick={() => {
           onChange(!checked);
         }}
-        className={`relative inline-flex h-5 w-9 shrink-0 items-center border border-line-strong transition-colors ${
-          checked ? 'bg-accent' : 'bg-surface'
-        } ${disabled ? '' : 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-0'}`}
+        className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border transition-colors duration-200 ${
+          checked
+            ? 'border-white/20 bg-accent'
+            : 'border-line-strong bg-white/[0.06]'
+        } ${disabled ? '' : 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue/60 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas'}`}
       >
         <span
-          className={`inline-block h-3 w-3 bg-ink transition-transform ${
-            checked ? 'translate-x-4' : 'translate-x-0.5'
+          className={`inline-block h-3.5 w-3.5 rounded-full transition-transform duration-200 ${
+            checked ? 'translate-x-[1.125rem] bg-black' : 'translate-x-0.5 bg-muted'
           }`}
         />
       </button>
-      {label && (
-        <span className="text-xs font-medium uppercase tracking-wider text-muted">{label}</span>
-      )}
+      {label && <span className="text-xs font-medium text-muted">{label}</span>}
     </label>
   );
 }

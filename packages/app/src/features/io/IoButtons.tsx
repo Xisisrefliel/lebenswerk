@@ -19,20 +19,20 @@ export function IoButtons() {
   };
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1.5">
       <button
         type="button"
         onClick={() => {
           downloadJson();
         }}
-        className="border border-line-strong bg-surface px-2 py-1 text-xs font-medium uppercase tracking-wider text-ink hover:border-accent"
+        className="rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-ink transition-colors hover:border-white/25 hover:bg-white/[0.06]"
       >
         {t('actions.exportJson')}
       </button>
       <button
         type="button"
         onClick={() => fileInputRef.current?.click()}
-        className="border border-line-strong bg-surface px-2 py-1 text-xs font-medium uppercase tracking-wider text-ink hover:border-accent"
+        className="rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-ink transition-colors hover:border-white/25 hover:bg-white/[0.06]"
       >
         {t('actions.importJson')}
       </button>
