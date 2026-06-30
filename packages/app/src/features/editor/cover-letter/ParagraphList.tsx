@@ -13,9 +13,7 @@ export function ParagraphList() {
 
   return (
     <div className="flex flex-col gap-3">
-      <span className="text-xs font-medium text-muted">
-        {t('coverLetterEditor.paragraphs')}
-      </span>
+      <span className="text-xs font-medium text-muted">{t('coverLetterEditor.paragraphs')}</span>
       {paragraphs.map((p, i) => (
         <div key={i} className="flex flex-col gap-1">
           <div className="flex items-center justify-end gap-1">

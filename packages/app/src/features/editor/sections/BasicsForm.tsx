@@ -59,9 +59,7 @@ export function BasicsForm() {
 
       {/* Row 2: Photo upload */}
       <div className="flex flex-col gap-2">
-        <span className="text-xs font-medium text-muted">
-          {t('basics.image')}
-        </span>
+        <span className="text-xs font-medium text-muted">{t('basics.image')}</span>
         <div className="flex items-start gap-3">
           {hasImage && (
             <img

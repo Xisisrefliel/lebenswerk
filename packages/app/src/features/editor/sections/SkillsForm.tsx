@@ -11,12 +11,7 @@ import { useSlotComponentOption } from '../useSlotComponentOption.js';
 
 function GripIcon({ className = '' }: { className?: string }) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 16 16"
-      fill="currentColor"
-      aria-hidden="true"
-    >
+    <svg className={className} viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
       <circle cx="5.5" cy="4" r="1.2" />
       <circle cx="10.5" cy="4" r="1.2" />
       <circle cx="5.5" cy="8" r="1.2" />
@@ -50,7 +45,7 @@ const COLUMN_OPTIONS = [
   { value: '3', label: '3' },
 ] as const;
 
-type ViewTransitionDocument = Document & {
+type ViewTransitionDocument = {
   startViewTransition?: (callback: () => void) => void;
 };
 
@@ -70,7 +65,7 @@ export function SkillsForm({ slotName, componentId }: SlotFormProps) {
     const apply = () => {
       setResume({ ...resume, skills: items });
     };
-    const viewTransitionDocument = document as ViewTransitionDocument;
+    const viewTransitionDocument = document as unknown as ViewTransitionDocument;
 
     if (animate && viewTransitionDocument.startViewTransition) {
       viewTransitionDocument.startViewTransition(apply);
@@ -227,6 +222,7 @@ function FlatRow({
   return (
     <div
       ref={rowRef}
+      role="listitem"
       className={`flex items-end gap-2 rounded-md border border-transparent p-1.5 transition-all ${over ? 'border-blue/50 bg-white/[0.04]' : ''} ${dragging ? 'scale-[0.99] border-blue/50 bg-white/[0.06] opacity-60 shadow-lg shadow-black/20' : ''}`}
       style={{ viewTransitionName: `skill-${skill.id}` }}
       onDragOver={(e) => {
@@ -249,6 +245,8 @@ function FlatRow({
     >
       <div
         draggable
+        role="button"
+        tabIndex={0}
         onDragStart={(e) => {
           dragRef.current = { from: index, type: 'flat' };
           setDragging(true);
@@ -322,6 +320,7 @@ function GroupRow({
   return (
     <div
       ref={rowRef}
+      role="listitem"
       className={`flex flex-col gap-2.5 rounded-lg border border-line-strong bg-white/[0.02] p-3.5 transition-all ${over ? 'border-blue/60 bg-white/[0.04]' : ''} ${dragging ? 'scale-[0.99] border-blue/60 bg-white/[0.06] opacity-60 shadow-lg shadow-black/20' : ''}`}
       style={{ viewTransitionName: `skill-${skill.id}` }}
       onDragOver={(e) => {
@@ -345,6 +344,8 @@ function GroupRow({
       <div className="flex items-end gap-2">
         <div
           draggable
+          role="button"
+          tabIndex={0}
           onDragStart={(e) => {
             dragRef.current = { from: index, type: 'group' };
             setDragging(true);
@@ -437,6 +438,7 @@ function ChildRow({
   return (
     <div
       ref={rowRef}
+      role="listitem"
       className={`flex items-center gap-2 rounded-md border border-transparent p-1 transition-all ${over ? 'border-blue/40 bg-white/[0.05]' : ''} ${dragging ? 'scale-[0.99] border-blue/40 bg-white/[0.07] opacity-60 shadow-md shadow-black/15' : ''}`}
       style={{ viewTransitionName: `skill-child-${child.id}` }}
       onDragOver={(e) => {
@@ -459,6 +461,8 @@ function ChildRow({
     >
       <div
         draggable
+        role="button"
+        tabIndex={0}
         onDragStart={(e) => {
           dragRef.current = { from: index };
           setDragging(true);

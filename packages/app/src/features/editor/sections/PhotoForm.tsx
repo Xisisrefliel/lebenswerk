@@ -87,9 +87,7 @@ export function PhotoForm({ slotName, componentId }: SlotFormProps) {
 
       {/* Shape */}
       <div className="flex flex-col gap-1">
-        <span className="text-xs font-medium text-muted">
-          {t('photo.shape')}
-        </span>
+        <span className="text-xs font-medium text-muted">{t('photo.shape')}</span>
         <ToggleGroup
           options={[
             { value: 'circle', label: t('photo.shape_circle') },
@@ -103,9 +101,7 @@ export function PhotoForm({ slotName, componentId }: SlotFormProps) {
 
       {/* Size */}
       <div className="flex flex-col gap-1">
-        <span className="text-xs font-medium text-muted">
-          {t('photo.size')}
-        </span>
+        <span className="text-xs font-medium text-muted">{t('photo.size')}</span>
         <ToggleGroup
           options={[
             { value: 'sm', label: t('photo.size_sm') },

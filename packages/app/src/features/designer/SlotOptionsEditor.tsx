@@ -37,9 +37,7 @@ export function SlotOptionsEditor({ slotName }: SlotOptionsEditorProps) {
 
           return (
             <div key={decl.key} className="flex items-center justify-between gap-2">
-              <span className="text-xs font-medium text-muted">
-                {decl.label[uiLocale]}
-              </span>
+              <span className="text-xs font-medium text-muted">{decl.label[uiLocale]}</span>
               <ToggleGroup
                 options={options}
                 value={enumValue}
@@ -54,9 +52,7 @@ export function SlotOptionsEditor({ slotName }: SlotOptionsEditorProps) {
         const rangeValue = typeof rawValue === 'number' ? rawValue : decl.default;
         return (
           <div key={decl.key} className="flex items-center justify-between gap-2">
-            <span className="text-xs font-medium text-muted">
-              {decl.label[uiLocale]}
-            </span>
+            <span className="text-xs font-medium text-muted">{decl.label[uiLocale]}</span>
             <div className="flex items-center gap-2">
               <input
                 type="range"

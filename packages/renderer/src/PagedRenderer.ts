@@ -70,11 +70,13 @@ export class PagedRenderer {
     if (seq !== this.renderSeq) return { pageCount: 0 };
 
     const iframeDocument = iframe.contentDocument;
+    if (!iframeDocument) return { pageCount: 0 };
+
     await this.waitForPagination(iframeDocument);
 
     if (seq !== this.renderSeq) return { pageCount: 0 };
 
-    const pageCount = iframeDocument?.querySelectorAll('.pagedjs_page').length ?? 0;
+    const pageCount = iframeDocument.querySelectorAll('.pagedjs_page').length;
 
     // Resize to Paged.js' rendered pages, not the temporary 500mm iframe viewport.
     const contentHeight = this.measureContentHeight(iframeDocument);
@@ -115,15 +117,17 @@ export class PagedRenderer {
       const styles = pages ? document.defaultView?.getComputedStyle(pages) : null;
       const paddingTop = styles ? Number.parseFloat(styles.paddingTop) || 0 : 0;
       const paddingBottom = styles ? Number.parseFloat(styles.paddingBottom) || 0 : 0;
-      const gap = styles ? Number.parseFloat(styles.rowGap) || Number.parseFloat(styles.gap) || 0 : 0;
+      const gap = styles
+        ? Number.parseFloat(styles.rowGap) || Number.parseFloat(styles.gap) || 0
+        : 0;
       const pagesHeight = pageHeights.reduce((total, height) => total + height, 0);
       return Math.ceil(paddingTop + pagesHeight + gap * (pageHeights.length - 1) + paddingBottom);
     }
 
     const { body, documentElement } = document;
     const fallbackHeight = Math.max(
-      body?.scrollHeight ?? 0,
-      body?.offsetHeight ?? 0,
+      body.scrollHeight,
+      body.offsetHeight,
       documentElement.scrollHeight,
       documentElement.offsetHeight,
     );
@@ -134,7 +138,7 @@ export class PagedRenderer {
   private async waitForPagination(document: Document | null): Promise<void> {
     if (!document) return;
 
-    await document.fonts?.ready.catch(() => undefined);
+    await document.fonts.ready.catch(() => undefined);
 
     if (document.querySelector('.pagedjs_page')) return;
 

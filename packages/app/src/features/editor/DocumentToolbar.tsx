@@ -63,9 +63,7 @@ export function DocumentToolbar() {
       <div className="flex flex-wrap items-center gap-2 overflow-x-auto px-3 py-2 sm:gap-2.5">
         {/* Design selector with label */}
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-muted">
-            {t('toolbar.design')}
-          </span>
+          <span className="text-xs font-medium text-muted">{t('toolbar.design')}</span>
           <div className="relative">
             <select
               value={activeDesignId}
@@ -94,9 +92,7 @@ export function DocumentToolbar() {
 
         {/* Document language with label */}
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-muted">
-            {t('toolbar.language')}
-          </span>
+          <span className="text-xs font-medium text-muted">{t('toolbar.language')}</span>
           <div className="relative">
             <select
               value={documentLocale}
@@ -178,9 +174,7 @@ export function DocumentToolbar() {
             className="fixed left-3 right-3 top-[6.5rem] z-[80] max-h-[70vh] overflow-y-auto rounded-lg border border-line-strong bg-surface-2 p-3 shadow-2xl shadow-black/50 sm:left-1/2 sm:right-auto sm:w-[30rem] sm:-translate-x-1/2"
           >
             <div className="mb-2.5 flex items-center justify-between">
-              <h2 className="text-xs font-semibold text-ink">
-                {t('toolbar.customizeTitle')}
-              </h2>
+              <h2 className="text-xs font-semibold text-ink">{t('toolbar.customizeTitle')}</h2>
               <button
                 type="button"
                 onClick={() => {

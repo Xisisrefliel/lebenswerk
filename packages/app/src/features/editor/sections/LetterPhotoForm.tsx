@@ -70,9 +70,7 @@ export function LetterPhotoForm({ slotName, componentId }: SlotFormProps) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <span className="text-xs font-medium text-muted">
-          {t('photo.shape')}
-        </span>
+        <span className="text-xs font-medium text-muted">{t('photo.shape')}</span>
         <ToggleGroup
           options={[
             { value: 'circle', label: t('photo.shape_circle') },

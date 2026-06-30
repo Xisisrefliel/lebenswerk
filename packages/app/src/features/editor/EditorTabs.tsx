@@ -616,17 +616,17 @@ function ComponentCard({
       </Collapsible>
       {dragPreview &&
         createPortal(
-        <div
-          data-component-drag-preview
-          className="pointer-events-none fixed z-50 overflow-hidden rounded-lg border border-blue/60 bg-surface text-ink opacity-95 shadow-xl shadow-black/30"
-          style={{
-            height: dragPreview.height,
-            left: dragPreview.left,
-            top: dragPreview.top,
-            width: dragPreview.width,
-          }}
-          dangerouslySetInnerHTML={{ __html: dragPreview.html }}
-        />,
+          <div
+            data-component-drag-preview
+            className="pointer-events-none fixed z-50 overflow-hidden rounded-lg border border-blue/60 bg-surface text-ink opacity-95 shadow-xl shadow-black/30"
+            style={{
+              height: dragPreview.height,
+              left: dragPreview.left,
+              top: dragPreview.top,
+              width: dragPreview.width,
+            }}
+            dangerouslySetInnerHTML={{ __html: dragPreview.html }}
+          />,
           document.body,
         )}
     </div>

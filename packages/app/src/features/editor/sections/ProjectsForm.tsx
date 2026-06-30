@@ -88,9 +88,7 @@ export function ProjectsForm(props: SlotFormProps) {
                 }}
               />
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-muted">
-                  {t('projects.keywords')}
-                </label>
+                <label className="text-xs font-medium text-muted">{t('projects.keywords')}</label>
                 <TagInput
                   tags={p.keywords}
                   onChange={(keywords) => {

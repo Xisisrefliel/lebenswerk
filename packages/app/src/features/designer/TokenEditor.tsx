@@ -11,9 +11,7 @@ import { ColorPickerPopover } from './ColorPickerPopover.js';
 function SettingsSection({ title, children }: { title?: string; children: ReactNode }) {
   return (
     <div className="flex flex-col gap-2 rounded-lg border border-line-strong bg-surface p-3">
-      {title && (
-        <h4 className="text-xs font-semibold text-muted">{title}</h4>
-      )}
+      {title && <h4 className="text-xs font-semibold text-muted">{title}</h4>}
       {children}
     </div>
   );

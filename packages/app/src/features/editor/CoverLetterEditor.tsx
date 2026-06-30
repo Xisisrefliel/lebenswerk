@@ -245,7 +245,11 @@ export function CoverLetterEditor() {
           </span>
           {cl.signatureImage ? (
             <div className="flex items-center gap-3">
-              <img src={cl.signatureImage} alt="" className="h-10 rounded border border-line-strong" />
+              <img
+                src={cl.signatureImage}
+                alt=""
+                className="h-10 rounded border border-line-strong"
+              />
               <Button
                 variant="danger"
                 size="sm"
