@@ -286,6 +286,7 @@ type ComponentDragState = { from: number; componentId: string };
 type MutableRef<T> = { current: T };
 type DragPreviewState = {
   height: number;
+  html: string;
   left: number;
   top: number;
   width: number;
@@ -301,7 +302,9 @@ type PendingComponentDrag = {
 
 function getSortableComponentHeaders(scope: string): HTMLElement[] {
   return Array.from(document.querySelectorAll<HTMLElement>('[data-component-sort-scope]')).filter(
-    (element) => element.dataset.componentSortScope === scope,
+    (element) =>
+      element.dataset.componentSortScope === scope &&
+      !element.closest('[data-component-drag-preview]'),
   );
 }
 
@@ -441,6 +444,7 @@ function ComponentCard({
       setDragging(true);
       setDragPreview({
         height: pendingDrag.rect.height,
+        html: cardRef.current?.innerHTML ?? '',
         left: pendingDrag.rect.left,
         top: pendingDrag.rect.top,
         width: pendingDrag.rect.width,
@@ -484,13 +488,13 @@ function ComponentCard({
       }}
       onPointerDown={(e) => {
         if (!canDrag || e.button !== 0) return;
-        const rect = headerRef.current?.getBoundingClientRect();
-        if (!rect) return;
+        const previewRect = cardRef.current?.getBoundingClientRect();
+        if (!previewRect) return;
 
         pendingDragRef.current = {
-          offsetY: e.clientY - rect.top,
+          offsetY: e.clientY - previewRect.top,
           pointerId: e.pointerId,
-          rect,
+          rect: previewRect,
           startX: e.clientX,
           startY: e.clientY,
         };
@@ -613,25 +617,16 @@ function ComponentCard({
       {dragPreview &&
         createPortal(
         <div
-          className="pointer-events-none fixed z-50 flex items-center gap-2 rounded-lg border border-blue/60 bg-surface px-3 py-2.5 text-sm font-medium text-ink opacity-95 shadow-xl shadow-black/30"
+          data-component-drag-preview
+          className="pointer-events-none fixed z-50 overflow-hidden rounded-lg border border-blue/60 bg-surface text-ink opacity-95 shadow-xl shadow-black/30"
           style={{
             height: dragPreview.height,
             left: dragPreview.left,
             top: dragPreview.top,
             width: dragPreview.width,
           }}
-        >
-          <svg
-            className="h-4 w-4 shrink-0 text-muted"
-            viewBox="0 0 16 16"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M6 4l4 4-4 4" />
-          </svg>
-          <span className="min-w-0 flex-1 truncate">{label}</span>
-        </div>,
+          dangerouslySetInnerHTML={{ __html: dragPreview.html }}
+        />,
           document.body,
         )}
     </div>
