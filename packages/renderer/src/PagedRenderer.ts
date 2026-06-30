@@ -48,6 +48,7 @@ export class PagedRenderer {
       width: '210mm',
       height: '500mm', // tall enough for Paged.js layout computation
       border: '0',
+      overflow: 'hidden',
     } satisfies Partial<CSSStyleDeclaration>);
     iframe.srcdoc = doc;
 
@@ -68,10 +69,11 @@ export class PagedRenderer {
 
     if (seq !== this.renderSeq) return { pageCount: 0 };
 
-    // Give Paged.js an extra tick to finish pagination
-    await new Promise((r) => setTimeout(r, 100));
-
     const iframeDocument = iframe.contentDocument;
+    await this.waitForPagination(iframeDocument);
+
+    if (seq !== this.renderSeq) return { pageCount: 0 };
+
     const pageCount = iframeDocument?.querySelectorAll('.pagedjs_page').length ?? 0;
 
     // Resize to Paged.js' rendered pages, not the temporary 500mm iframe viewport.
@@ -104,14 +106,18 @@ export class PagedRenderer {
   private measureContentHeight(document: Document | null): number | null {
     if (!document) return null;
 
-    const pageRects = [...document.querySelectorAll<HTMLElement>('.pagedjs_page')]
-      .map((page) => page.getBoundingClientRect())
-      .filter((rect) => rect.height > 0);
+    const pageHeights = [...document.querySelectorAll<HTMLElement>('.pagedjs_page')]
+      .map((page) => page.getBoundingClientRect().height)
+      .filter((height) => height > 0);
 
-    if (pageRects.length > 0) {
-      const top = Math.min(...pageRects.map((rect) => rect.top));
-      const bottom = Math.max(...pageRects.map((rect) => rect.bottom));
-      return Math.ceil(bottom - top);
+    if (pageHeights.length > 0) {
+      const pages = document.querySelector<HTMLElement>('.pagedjs_pages');
+      const styles = pages ? document.defaultView?.getComputedStyle(pages) : null;
+      const paddingTop = styles ? Number.parseFloat(styles.paddingTop) || 0 : 0;
+      const paddingBottom = styles ? Number.parseFloat(styles.paddingBottom) || 0 : 0;
+      const gap = styles ? Number.parseFloat(styles.rowGap) || Number.parseFloat(styles.gap) || 0 : 0;
+      const pagesHeight = pageHeights.reduce((total, height) => total + height, 0);
+      return Math.ceil(paddingTop + pagesHeight + gap * (pageHeights.length - 1) + paddingBottom);
     }
 
     const { body, documentElement } = document;
@@ -123,6 +129,30 @@ export class PagedRenderer {
     );
 
     return fallbackHeight > 0 ? fallbackHeight : null;
+  }
+
+  private async waitForPagination(document: Document | null): Promise<void> {
+    if (!document) return;
+
+    await document.fonts?.ready.catch(() => undefined);
+
+    if (document.querySelector('.pagedjs_page')) return;
+
+    await new Promise<void>((resolve) => {
+      const timeout = window.setTimeout(() => {
+        observer.disconnect();
+        resolve();
+      }, 3000);
+
+      const observer = new MutationObserver(() => {
+        if (!document.querySelector('.pagedjs_page')) return;
+        window.clearTimeout(timeout);
+        observer.disconnect();
+        resolve();
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+    });
   }
 
   private buildDocument(stylesheet: string, bodyHTML: string): string {

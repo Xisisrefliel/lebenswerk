@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Agentation } from 'agentation';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DocumentToolbar } from './features/editor/DocumentToolbar.js';
 import { ResumeEditor } from './features/editor/ResumeEditor.js';
