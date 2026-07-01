@@ -7,9 +7,11 @@ interface LetterSectionProps {
 
 export function LetterSection({ title, children }: LetterSectionProps) {
   return (
-    <section className="flex flex-col gap-3 rounded-lg border border-line-strong bg-surface p-3.5">
-      <h3 className="text-xs font-semibold text-ink">{title}</h3>
-      {children}
+    <section className="border-b border-line bg-surface/20 last:border-b-0">
+      <div className="flex min-h-12 items-center px-3 py-2.5">
+        <h3 className="min-w-0 truncate text-sm font-medium text-ink">{title}</h3>
+      </div>
+      <div className="flex flex-col gap-3 border-t border-line bg-canvas/80 p-4">{children}</div>
     </section>
   );
 }

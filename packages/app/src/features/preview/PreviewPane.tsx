@@ -4,6 +4,7 @@ import { useCoverLetterStore } from '../../state/coverLetterStore.js';
 import { useActiveDesign, useDesignStore } from '../../state/designStore.js';
 import { useResumeStore } from '../../state/resumeStore.js';
 import { useSettingsStore } from '../../state/settingsStore.js';
+import { DocumentTypeSwitch } from '../editor/DocumentTypeSwitch.js';
 import { usePagedPreview } from './usePagedPreview.js';
 
 const ZOOM_STEPS = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2] as const;
@@ -105,13 +106,15 @@ export function PreviewPane() {
   return (
     <div className="flex h-full flex-col">
       {/* Toolbar: page count + zoom controls + rendering status */}
-      <div className="flex shrink-0 items-center justify-between border-b border-line bg-canvas/60 px-3 py-1.5 backdrop-blur-sm">
-        <span className="font-mono text-xs tabular-nums text-muted">
+      <div className="grid shrink-0 grid-cols-[minmax(0,1fr)_minmax(8rem,16rem)_minmax(0,1fr)] items-center gap-3 border-b border-line bg-canvas/60 px-3 py-1.5 backdrop-blur-sm">
+        <span className="min-w-0 font-mono text-xs tabular-nums text-muted">
           {pageCount > 0 &&
             `${pageCount} ${pageCount === 1 ? t('preview.page') : t('preview.pages')}`}
         </span>
 
-        <div className="flex items-center gap-1">
+        <DocumentTypeSwitch />
+
+        <div className="flex min-w-0 items-center justify-end gap-1">
           {generating && (
             <span className="mr-2 flex items-center gap-1.5 text-xs text-muted">
               <svg className="h-3 w-3 animate-spin" viewBox="0 0 16 16" fill="none">

@@ -49,7 +49,9 @@ export function EditorTabs() {
 
     return (
       <div className="flex flex-col gap-5 px-4 py-3">
-        <CoverLetterEditor />
+        <RegionShell title={t('workspace.content', { defaultValue: 'Inhalt' })}>
+          <CoverLetterEditor />
+        </RegionShell>
 
         {config.headerComponents?.length && config.headerAccepts ? (
           <RegionShell title={t('workspace.regionHeader', { defaultValue: 'Kopfbereich' })}>

@@ -11,11 +11,14 @@ import { ColorPickerPopover } from './ColorPickerPopover.js';
 
 function SettingsSection({ title, children }: { title?: string; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-3 border-t border-line pt-4 first:border-t-0 first:pt-0">
+    <div className="flex flex-col gap-3 border-t border-line/80 pt-3 first:border-t-0 first:pt-0">
       {title && (
-        <h4 className="text-[11px] font-medium uppercase tracking-[0.08em] text-muted">
-          {title}
-        </h4>
+        <div className="border border-line/70 bg-white/[0.018] px-2.5 py-1.5">
+          <h4 className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-ink/90">
+            <span aria-hidden="true" className="h-2.5 w-0.5 bg-accent/80" />
+            {title}
+          </h4>
+        </div>
       )}
       {children}
     </div>

@@ -41,7 +41,7 @@ export function CoverLetterEditor() {
   const sender = cl.sender;
 
   return (
-    <div className="flex flex-col gap-3">
+    <div>
       {/* DIN 5008 Settings */}
       <LetterSection title={t('coverLetterEditor.din5008Form')}>
         <ToggleGroup

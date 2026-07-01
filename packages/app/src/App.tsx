@@ -13,6 +13,7 @@ export function App() {
   const { t, i18n } = useTranslation();
   const uiLocale = useSettingsStore((s) => s.settings.uiLocale);
   const [clearDialogOpen, setClearDialogOpen] = useState(false);
+  const [designPanelCollapsed, setDesignPanelCollapsed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobilePanel, setMobilePanel] = useState<'content' | 'preview' | 'settings'>('content');
   const [isDesktop, setIsDesktop] = useState(() =>
@@ -40,6 +41,9 @@ export function App() {
     setClearDialogOpen(false);
   };
   const showPreviewPane = isDesktop || mobilePanel === 'preview';
+  const workspaceGridClass = designPanelCollapsed
+    ? 'lg:grid-cols-[minmax(24rem,28rem)_minmax(34rem,1fr)_3rem]'
+    : 'lg:grid-cols-[minmax(24rem,28rem)_minmax(34rem,1fr)_minmax(18rem,21rem)]';
 
   return (
     <>
@@ -196,7 +200,7 @@ export function App() {
           ))}
         </div>
 
-        <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-[minmax(24rem,28rem)_minmax(34rem,1fr)_minmax(18rem,21rem)]">
+        <div className={`grid min-h-0 flex-1 grid-cols-1 ${workspaceGridClass}`}>
           <aside
             className={`min-h-0 border-r border-line bg-surface/35 lg:block ${
               mobilePanel === 'content' ? 'block' : 'hidden'
@@ -229,7 +233,70 @@ export function App() {
               mobilePanel === 'settings' ? 'block' : 'hidden'
             }`}
           >
-            <DocumentToolbar />
+            {designPanelCollapsed && isDesktop ? (
+              <div className="flex h-full min-h-0 flex-col items-center border-l border-white/[0.03] bg-canvas/35">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDesignPanelCollapsed(false);
+                  }}
+                  className="mt-1.5 flex h-7 w-7 items-center justify-center border border-line-strong text-muted transition-colors hover:bg-white/[0.05] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue/45"
+                  aria-label={t('workspace.showDesignPanel', {
+                    defaultValue: 'Designleiste anzeigen',
+                  })}
+                  title={t('workspace.showDesignPanel', {
+                    defaultValue: 'Designleiste anzeigen',
+                  })}
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="h-4 w-4"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                  >
+                    <path d="M6 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+                <span className="mt-3 [writing-mode:vertical-rl] text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
+                  {t('workspace.design', { defaultValue: 'Design' })}
+                </span>
+              </div>
+            ) : (
+              <div className="flex h-full min-h-0 flex-col">
+                <div className="hidden h-10 shrink-0 items-center justify-between border-b border-line bg-canvas/55 px-3 lg:flex">
+                  <span className="text-xs font-semibold uppercase tracking-[0.08em] text-muted">
+                    {t('workspace.design', { defaultValue: 'Design' })}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDesignPanelCollapsed(true);
+                    }}
+                    className="flex h-7 w-7 items-center justify-center border border-line-strong text-muted transition-colors hover:bg-white/[0.05] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue/45"
+                    aria-label={t('workspace.hideDesignPanel', {
+                      defaultValue: 'Designleiste ausblenden',
+                    })}
+                    title={t('workspace.hideDesignPanel', {
+                      defaultValue: 'Designleiste ausblenden',
+                    })}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="h-3.5 w-3.5"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                    >
+                      <path d="M10 3L5 8l5 5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </div>
+                <DocumentToolbar />
+              </div>
+            )}
           </aside>
         </div>
       </div>
