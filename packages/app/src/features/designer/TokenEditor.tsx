@@ -93,11 +93,7 @@ export function TokenEditor() {
             className="flex h-8 w-full items-center justify-between border border-line bg-white/[0.025] px-2.5 text-xs font-medium text-muted transition-colors hover:border-white/25 hover:bg-white/[0.05] hover:text-ink"
           >
             <span>{t('designer.shuffleColors')}</span>
-            <ShuffleAngularIcon
-              aria-hidden="true"
-              className="h-3.5 w-3.5"
-              weight="bold"
-            />
+            <ShuffleAngularIcon aria-hidden="true" className="h-3.5 w-3.5" weight="bold" />
           </button>
 
           <div className="flex flex-col border border-line">

@@ -207,13 +207,7 @@ function getRegionCopy(
   };
 }
 
-function RegionShell({
-  title,
-  children,
-}: {
-  title: string;
-  children: ReactNode;
-}) {
+function RegionShell({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="border-t border-line pt-4 first:border-t-0 first:pt-0">
       <div className="mb-2">
