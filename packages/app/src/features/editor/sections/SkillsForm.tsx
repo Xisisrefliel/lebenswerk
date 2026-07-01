@@ -1,5 +1,6 @@
 import type { SlotFormProps } from '../formRegistry.js';
 import type { Skill, SkillChild } from '@cv/core';
+import { DotsSixVerticalIcon } from '@phosphor-icons/react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useResumeStore } from '../../../state/resumeStore.js';
@@ -10,16 +11,7 @@ import { generateId } from '../../../utils/generateId.js';
 import { useSlotComponentOption } from '../useSlotComponentOption.js';
 
 function GripIcon({ className = '' }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-      <circle cx="5.5" cy="4" r="1.2" />
-      <circle cx="10.5" cy="4" r="1.2" />
-      <circle cx="5.5" cy="8" r="1.2" />
-      <circle cx="10.5" cy="8" r="1.2" />
-      <circle cx="5.5" cy="12" r="1.2" />
-      <circle cx="10.5" cy="12" r="1.2" />
-    </svg>
-  );
+  return <DotsSixVerticalIcon aria-hidden="true" className={className} weight="bold" />;
 }
 
 function emptyFlatSkill(): Skill {
@@ -488,7 +480,7 @@ function ChildRow({
           onPatch(groupId, child.id, { name: e.target.value });
         }}
         placeholder={t('skills.childPlaceholder')}
-        className="min-w-0 flex-1 rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none placeholder:text-muted/70"
+        className="min-w-0 flex-1 border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none placeholder:text-muted/70"
       />
       <button
         type="button"

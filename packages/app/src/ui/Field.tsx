@@ -1,7 +1,7 @@
 import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
 
 const inputBase =
-  'min-h-8 rounded-[5px] border border-line-strong bg-white/[0.025] px-2.5 py-1.5 text-sm leading-5 text-ink placeholder:text-muted/65 transition-colors hover:border-white/25 focus:border-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-blue/45 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:cursor-not-allowed disabled:opacity-50';
+  'min-h-8 border border-line-strong bg-white/[0.025] px-2.5 py-1.5 text-sm leading-5 text-ink placeholder:text-muted/65 transition-colors hover:border-white/25 focus:border-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-blue/45 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:cursor-not-allowed disabled:opacity-50';
 const labelBase = 'text-xs font-medium text-muted';
 
 interface FieldProps extends InputHTMLAttributes<HTMLInputElement> {

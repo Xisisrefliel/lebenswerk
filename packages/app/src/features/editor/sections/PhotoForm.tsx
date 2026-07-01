@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useResumeStore } from '../../../state/resumeStore.js';
 import { Button } from '../../../ui/Button.js';
-import { ToggleGroup } from '../../../ui/ToggleGroup.js';
+import { RadioList } from '../../../ui/RadioList.js';
 import { isValidImageFile, processPhotoFile } from '../../../utils/imageUtils.js';
 import { useSlotComponentOption } from '../useSlotComponentOption.js';
 
@@ -66,7 +66,7 @@ export function PhotoForm({ slotName, componentId }: SlotFormProps) {
               onChange={(e) => {
                 update(e.target.value);
               }}
-              className="rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none placeholder:text-muted/70"
+              className="border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none placeholder:text-muted/70"
             />
           )}
           {hasImage && (
@@ -88,7 +88,8 @@ export function PhotoForm({ slotName, componentId }: SlotFormProps) {
       {/* Shape */}
       <div className="flex flex-col gap-1">
         <span className="text-xs font-medium text-muted">{t('photo.shape')}</span>
-        <ToggleGroup
+        <RadioList
+          layout="horizontal"
           options={[
             { value: 'circle', label: t('photo.shape_circle') },
             { value: 'rounded', label: t('photo.shape_rounded') },
@@ -102,7 +103,8 @@ export function PhotoForm({ slotName, componentId }: SlotFormProps) {
       {/* Size */}
       <div className="flex flex-col gap-1">
         <span className="text-xs font-medium text-muted">{t('photo.size')}</span>
-        <ToggleGroup
+        <RadioList
+          layout="horizontal"
           options={[
             { value: 'sm', label: t('photo.size_sm') },
             { value: 'md', label: t('photo.size_md') },

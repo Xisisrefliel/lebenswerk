@@ -1,7 +1,9 @@
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { ShuffleAngularIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { useActiveDesign, useDesignStore, useResolvedTokens } from '../../state/designStore.js';
 import { useSettingsStore } from '../../state/settingsStore.js';
+import { RadioList } from '../../ui/RadioList.js';
 import { Select } from '../../ui/Select.js';
 import { ToggleGroup } from '../../ui/ToggleGroup.js';
 import { RECOMMENDED_PALETTES, shufflePalette } from './colorPalettes.js';
@@ -16,49 +18,6 @@ function SettingsSection({ title, children }: { title?: string; children: ReactN
         </h4>
       )}
       {children}
-    </div>
-  );
-}
-
-function OptionRadioList({
-  options,
-  value,
-  onChange,
-}: {
-  options: { value: string; label: string }[];
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  return (
-    <div role="radiogroup" className="flex flex-col border border-line">
-      {options.map((option) => {
-        const selected = option.value === value;
-        return (
-          <button
-            key={option.value}
-            type="button"
-            role="radio"
-            aria-checked={selected}
-            onClick={() => {
-              onChange(option.value);
-            }}
-            className={`flex min-h-9 w-full items-center gap-2 border-b border-line px-2.5 text-left text-xs transition-colors last:border-b-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-white/60 ${
-              selected
-                ? 'bg-white/[0.065] text-ink'
-                : 'bg-white/[0.018] text-muted hover:bg-white/[0.045] hover:text-ink'
-            }`}
-          >
-            <span
-              className={`flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border ${
-                selected ? 'border-ink' : 'border-muted/60'
-              }`}
-            >
-              {selected && <span className="h-1.5 w-1.5 rounded-full bg-ink" />}
-            </span>
-            <span className="min-w-0 flex-1 truncate font-medium">{option.label}</span>
-          </button>
-        );
-      })}
     </div>
   );
 }
@@ -131,18 +90,11 @@ export function TokenEditor() {
             className="flex h-8 w-full items-center justify-between border border-line bg-white/[0.025] px-2.5 text-xs font-medium text-muted transition-colors hover:border-white/25 hover:bg-white/[0.05] hover:text-ink"
           >
             <span>{t('designer.shuffleColors')}</span>
-            <svg
+            <ShuffleAngularIcon
+              aria-hidden="true"
               className="h-3.5 w-3.5"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-            >
-              <path d="M2 4h2.2c1.1 0 1.9.4 2.5 1.3l2.6 3.4c.6.9 1.4 1.3 2.5 1.3H14" />
-              <path d="M11.5 2.5 14 5l-2.5 2.5M2 12h2.2c1.1 0 1.9-.4 2.5-1.3l.5-.7M11.5 8.5 14 11l-2.5 2.5" />
-            </svg>
+              weight="bold"
+            />
           </button>
 
           <div className="flex flex-col border border-line">
@@ -210,7 +162,7 @@ export function TokenEditor() {
                     className="flex flex-col gap-2 border-t border-line/70 pt-3 first:border-t-0 first:pt-0"
                   >
                     <span className="text-xs font-medium text-muted">{decl.label[uiLocale]}</span>
-                    <OptionRadioList
+                    <RadioList
                       options={decl.values.map((v) => ({
                         value: v.value,
                         label: v.label[uiLocale],

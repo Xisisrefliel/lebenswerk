@@ -36,7 +36,7 @@ export function RichTextField({ label, value, onChange }: RichTextFieldProps) {
   return (
     <div className="flex flex-col gap-1 text-sm">
       <span className="text-xs font-medium text-muted">{label}</span>
-      <div className="overflow-hidden rounded-md border border-line-strong bg-white/[0.03] transition-colors focus-within:border-blue focus-within:ring-2 focus-within:ring-blue/30">
+      <div className="overflow-hidden border border-line-strong bg-white/[0.03] transition-colors focus-within:border-blue focus-within:ring-2 focus-within:ring-blue/30">
         {/* Toolbar */}
         <div className="flex gap-0.5 border-b border-line bg-white/[0.02] px-1.5 py-1">
           <ToolbarButton

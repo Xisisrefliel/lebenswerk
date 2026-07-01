@@ -30,8 +30,6 @@ export function LanguagesForm(props: SlotFormProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      <ListFormHeader count={items.length} onAdd={add} />
-
       <div className="flex flex-col gap-2">
         {items.map((l) => (
           <div key={l.id} className="flex items-end gap-2">
@@ -65,6 +63,8 @@ export function LanguagesForm(props: SlotFormProps) {
           </div>
         ))}
       </div>
+
+      <ListFormHeader count={items.length} onAdd={add} />
     </div>
   );
 }

@@ -95,18 +95,16 @@ export function App() {
 
         <header className="flex h-12 shrink-0 items-center justify-between gap-3 border-b border-line bg-canvas px-3 sm:px-4">
           <div className="flex min-w-0 items-center gap-2.5">
-            <div className="flex h-6 w-6 shrink-0 items-center justify-center border border-line-strong bg-white/[0.04]">
-              <svg className="h-3 w-3 text-ink" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M2 2h5.5v5.5H2V2zm6.5 0H14v5.5H8.5V2zM2 8.5h5.5V14H2V8.5zm6.5 0H14V14H8.5V8.5z" />
-              </svg>
-            </div>
+            <img
+              src="/brand/lebenswerk-logo.png"
+              alt=""
+              aria-hidden="true"
+              className="h-7 w-7 shrink-0 object-contain"
+            />
             <div className="min-w-0">
               <h1 className="truncate text-sm font-medium tracking-[-0.01em] text-ink">
-                Lebenswerk
+                Lebenswerk - {t('app.title')}
               </h1>
-              <p className="hidden text-[11px] leading-none text-muted sm:block">
-                {t('app.title')}
-              </p>
             </div>
           </div>
 
@@ -205,12 +203,7 @@ export function App() {
             }`}
           >
             <div className="flex h-full min-h-0 flex-col">
-              <div className="shrink-0 border-b border-line px-4 py-3">
-                <h2 className="text-sm font-medium text-ink">
-                  {t('workspace.sections', { defaultValue: 'Abschnitte bearbeiten' })}
-                </h2>
-              </div>
-              <div className="scrollbar-none min-h-0 flex-1 overflow-y-auto px-4 py-3">
+              <div className="scrollbar-none min-h-0 flex-1 overflow-y-auto">
                 <ResumeEditor />
               </div>
               <button

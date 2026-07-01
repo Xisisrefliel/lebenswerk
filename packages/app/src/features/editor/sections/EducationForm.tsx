@@ -31,8 +31,6 @@ export function EducationForm(props: SlotFormProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      <ListFormHeader count={items.length} onAdd={add} />
-
       <div className="flex flex-col">
         {items.map((e) => (
           <ListItemCard
@@ -112,6 +110,8 @@ export function EducationForm(props: SlotFormProps) {
           </ListItemCard>
         ))}
       </div>
+
+      <ListFormHeader count={items.length} onAdd={add} />
     </div>
   );
 }

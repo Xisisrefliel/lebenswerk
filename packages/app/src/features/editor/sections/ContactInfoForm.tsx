@@ -5,8 +5,8 @@ import { useResumeStore } from '../../../state/resumeStore.js';
 import { Button } from '../../../ui/Button.js';
 import { Field } from '../../../ui/Field.js';
 import { LocationFields } from '../../../ui/LocationFields.js';
+import { RadioList } from '../../../ui/RadioList.js';
 import { Select } from '../../../ui/Select.js';
-import { ToggleGroup } from '../../../ui/ToggleGroup.js';
 import { useSlotComponentOption } from '../useSlotComponentOption.js';
 
 const NETWORK_SUGGESTIONS = [
@@ -68,7 +68,12 @@ export function ContactInfoForm({ slotName, componentId }: SlotFormProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      <ToggleGroup options={displayStyleOptions} value={displayStyle} onChange={setDisplayStyle} />
+      <RadioList
+        layout="horizontal"
+        options={displayStyleOptions}
+        value={displayStyle}
+        onChange={setDisplayStyle}
+      />
 
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <Field

@@ -1,3 +1,4 @@
+import { CaretDownIcon, CaretUpIcon, XIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 import { useCoverLetterStore } from '../../../state/coverLetterStore.js';
 import { Button } from '../../../ui/Button.js';
@@ -26,16 +27,7 @@ export function ParagraphList() {
               className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink disabled:opacity-30"
               title={t('designer.moveUp')}
             >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <path d="M3 8.5l4-4 4 4" />
-              </svg>
+              <CaretUpIcon className="h-3.5 w-3.5" weight="bold" />
             </button>
             <button
               type="button"
@@ -46,16 +38,7 @@ export function ParagraphList() {
               className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-ink disabled:opacity-30"
               title={t('designer.moveDown')}
             >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <path d="M3 5.5l4 4 4-4" />
-              </svg>
+              <CaretDownIcon className="h-3.5 w-3.5" weight="bold" />
             </button>
             <button
               type="button"
@@ -65,16 +48,7 @@ export function ParagraphList() {
               className="rounded p-1 text-muted transition-colors hover:bg-white/[0.06] hover:text-red"
               title={t('coverLetterEditor.removeParagraph')}
             >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <path d="M3 3l8 8M11 3l-8 8" />
-              </svg>
+              <XIcon className="h-3.5 w-3.5" weight="bold" />
             </button>
           </div>
           <RichTextField

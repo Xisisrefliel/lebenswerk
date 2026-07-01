@@ -1,4 +1,19 @@
 import type { ExpandedSlotDefinition } from '@cv/layout-engine';
+import {
+  BriefcaseIcon,
+  CaretRightIcon,
+  CertificateIcon,
+  FolderIcon,
+  GlobeIcon,
+  GraduationCapIcon,
+  HeartIcon,
+  IdentificationCardIcon,
+  ImageIcon,
+  SquaresFourIcon,
+  StarIcon,
+  TextAlignLeftIcon,
+  UserIcon,
+} from '@phosphor-icons/react';
 import { createElement, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +48,7 @@ export function EditorTabs() {
     const config = design.anschreibenConfig ?? {};
 
     return (
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 px-4 py-3">
         <CoverLetterEditor />
 
         {config.headerComponents?.length && config.headerAccepts ? (
@@ -65,7 +80,7 @@ export function EditorTabs() {
   const activeSlotDef = resolvedActiveSlot ? design.slots[resolvedActiveSlot] : undefined;
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       {editorSlotNames.length > 1 ? (
         <EditorSlotTabs
           tabs={editorSlotNames}
@@ -76,15 +91,17 @@ export function EditorTabs() {
       ) : null}
 
       {activeSlotDef ? (
-        editorSlotNames.length > 1 ? (
-          <SlotPanelFrame>
-            <SlotPanel slotName={resolvedActiveSlot} slotDef={activeSlotDef} />
-          </SlotPanelFrame>
-        ) : (
-          <RegionShell title={getRegionCopy(resolvedActiveSlot, resolvedSlotOptions, t).title}>
-            <SlotPanel slotName={resolvedActiveSlot} slotDef={activeSlotDef} />
-          </RegionShell>
-        )
+        <div className="px-4 py-3">
+          {editorSlotNames.length > 1 ? (
+            <SlotPanelFrame>
+              <SlotPanel slotName={resolvedActiveSlot} slotDef={activeSlotDef} />
+            </SlotPanelFrame>
+          ) : (
+            <RegionShell title={getRegionCopy(resolvedActiveSlot, resolvedSlotOptions, t).title}>
+              <SlotPanel slotName={resolvedActiveSlot} slotDef={activeSlotDef} />
+            </RegionShell>
+          )}
+        </div>
       ) : null}
     </div>
   );
@@ -124,7 +141,7 @@ function EditorSlotTabs({
     <div
       role="tablist"
       aria-label={t('editor.slotTabs', { defaultValue: 'Bereiche' })}
-      className="grid overflow-hidden border border-line bg-canvas"
+      className="grid border-b border-line bg-canvas"
       style={{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
     >
       {tabs.map((slotName) => {
@@ -411,105 +428,34 @@ interface ComponentCardProps {
 }
 
 function ComponentIcon({ componentId }: { componentId: string }) {
-  const shared = {
-    className: 'h-[18px] w-[18px]',
-    fill: 'none',
-    stroke: 'currentColor',
-    strokeLinecap: 'round' as const,
-    strokeLinejoin: 'round' as const,
-    strokeWidth: 1.8,
-    viewBox: '0 0 24 24',
-  };
-
   switch (componentId) {
     case 'photo':
     case 'letter-photo':
-      return (
-        <svg {...shared}>
-          <rect x="4" y="5" width="16" height="14" rx="1.5" />
-          <circle cx="9" cy="10" r="1.5" />
-          <path d="m4 16 4.2-4.2a1.6 1.6 0 0 1 2.2 0L16 17" />
-          <path d="m13.5 14.5 1.1-1.1a1.5 1.5 0 0 1 2.1 0L20 16.7" />
-        </svg>
-      );
+      return <ImageIcon className="h-[18px] w-[18px]" weight="regular" />;
     case 'personal-info':
     case 'letter-title':
-      return (
-        <svg {...shared}>
-          <circle cx="12" cy="8" r="3.2" />
-          <path d="M5.5 19c1.1-3.2 3.3-5 6.5-5s5.4 1.8 6.5 5" />
-        </svg>
-      );
+      return <UserIcon className="h-[18px] w-[18px]" weight="regular" />;
     case 'contact-info':
     case 'letter-contact':
-      return (
-        <svg {...shared}>
-          <rect x="5" y="4" width="14" height="16" rx="2" />
-          <path d="M9 8h6M9 12h6M9 16h3" />
-        </svg>
-      );
+      return <IdentificationCardIcon className="h-[18px] w-[18px]" weight="regular" />;
     case 'summary':
-      return (
-        <svg {...shared}>
-          <path d="M5 7h14M5 12h14M5 17h9" />
-        </svg>
-      );
+      return <TextAlignLeftIcon className="h-[18px] w-[18px]" weight="regular" />;
     case 'experience-list':
-      return (
-        <svg {...shared}>
-          <rect x="4" y="7" width="16" height="12" rx="2" />
-          <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7" />
-          <path d="M4 12h16" />
-        </svg>
-      );
+      return <BriefcaseIcon className="h-[18px] w-[18px]" weight="regular" />;
     case 'education-list':
-      return (
-        <svg {...shared}>
-          <path d="m4 9 8-4 8 4-8 4-8-4Z" />
-          <path d="M7 11.5V16c1.4 1.4 3.1 2 5 2s3.6-.6 5-2v-4.5" />
-        </svg>
-      );
+      return <GraduationCapIcon className="h-[18px] w-[18px]" weight="regular" />;
     case 'skills-list':
-      return (
-        <svg {...shared}>
-          <path d="M12 3.8 14.2 9l5.5.5-4.2 3.6 1.3 5.4L12 15.6l-4.8 2.9 1.3-5.4-4.2-3.6L9.8 9 12 3.8Z" />
-        </svg>
-      );
+      return <StarIcon className="h-[18px] w-[18px]" weight="regular" />;
     case 'languages-list':
-      return (
-        <svg {...shared}>
-          <circle cx="12" cy="12" r="8" />
-          <path d="M4 12h16M12 4c2 2.1 3 4.8 3 8s-1 5.9-3 8M12 4c-2 2.1-3 4.8-3 8s1 5.9 3 8" />
-        </svg>
-      );
+      return <GlobeIcon className="h-[18px] w-[18px]" weight="regular" />;
     case 'projects-list':
-      return (
-        <svg {...shared}>
-          <path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H10l2 2h5.5A2.5 2.5 0 0 1 20 9.5V17a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7.5Z" />
-        </svg>
-      );
+      return <FolderIcon className="h-[18px] w-[18px]" weight="regular" />;
     case 'certificates-list':
-      return (
-        <svg {...shared}>
-          <circle cx="12" cy="9" r="4" />
-          <path d="m9.5 12.4-1.2 6.1 3.7-2.1 3.7 2.1-1.2-6.1" />
-        </svg>
-      );
+      return <CertificateIcon className="h-[18px] w-[18px]" weight="regular" />;
     case 'interests-list':
-      return (
-        <svg {...shared}>
-          <path d="M12 19s-7-4.4-7-9.1A4 4 0 0 1 12 7a4 4 0 0 1 7 2.9C19 14.6 12 19 12 19Z" />
-        </svg>
-      );
+      return <HeartIcon className="h-[18px] w-[18px]" weight="regular" />;
     default:
-      return (
-        <svg {...shared}>
-          <rect x="5" y="5" width="6" height="6" rx="1" />
-          <rect x="13" y="5" width="6" height="6" rx="1" />
-          <rect x="5" y="13" width="6" height="6" rx="1" />
-          <rect x="13" y="13" width="6" height="6" rx="1" />
-        </svg>
-      );
+      return <SquaresFourIcon className="h-[18px] w-[18px]" weight="regular" />;
   }
 }
 
@@ -707,15 +653,11 @@ function ComponentCard({
         <ComponentIcon componentId={componentId} />
       </span>
       <span className="min-w-0 flex-1 truncate text-sm font-medium text-ink">{label}</span>
-      <svg
+      <CaretRightIcon
+        aria-hidden="true"
         className={`h-3.5 w-3.5 shrink-0 text-muted transition-transform duration-200 ${open && enabled ? 'rotate-90' : ''}`}
-        viewBox="0 0 16 16"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      >
-        <path d="M6 4l4 4-4 4" />
-      </svg>
+        weight="bold"
+      />
       <div
         role="toolbar"
         className="flex items-center gap-1"

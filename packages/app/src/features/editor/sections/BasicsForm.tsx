@@ -93,7 +93,7 @@ export function BasicsForm() {
                 onChange={(e) => {
                   update({ image: e.target.value });
                 }}
-                className="rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none placeholder:text-muted/70"
+                className="border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none placeholder:text-muted/70"
               />
             )}
             {hasImage && (

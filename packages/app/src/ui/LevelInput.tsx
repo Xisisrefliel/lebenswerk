@@ -146,7 +146,7 @@ export function LevelInput({ displayMode, value, onChange, i18nPrefix }: LevelIn
             const match = NAMED_LEVELS.find((l) => l.key === e.target.value);
             if (match) onChange(match.value);
           }}
-          className="rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none"
+          className="border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-sm text-ink transition-colors hover:border-white/25 focus:border-blue focus:outline-none"
         >
           {NAMED_LEVELS.map((l) => (
             <option key={l.key} value={l.key}>

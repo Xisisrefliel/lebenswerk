@@ -22,8 +22,6 @@ export function InterestsForm(props: SlotFormProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      <ListFormHeader count={items.length} onAdd={add} />
-
       <div className="flex flex-col gap-2">
         {items.map((i) => (
           <div key={i.id} className="flex items-end gap-2">
@@ -49,6 +47,8 @@ export function InterestsForm(props: SlotFormProps) {
           </div>
         ))}
       </div>
+
+      <ListFormHeader count={items.length} onAdd={add} />
     </div>
   );
 }

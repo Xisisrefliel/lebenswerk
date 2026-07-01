@@ -19,6 +19,7 @@
     "@cv/layout-engine": "workspace:*",
     "@cv/layouts": "workspace:*",
     "@cv/renderer": "workspace:*",
+    "@phosphor-icons/react": "^2.1.10",
     "@tiptap/pm": "^3.22.3",
     "@tiptap/react": "^3.22.3",
     "@tiptap/starter-kit": "^3.22.3",

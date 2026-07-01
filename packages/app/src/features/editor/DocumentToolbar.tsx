@@ -1,4 +1,5 @@
 import type { Locale } from '@cv/core';
+import type { DocumentType } from '@cv/layout-engine';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getAllDesigns } from '@cv/layout-engine';
@@ -12,14 +13,67 @@ import { Select } from '../../ui/Select.js';
 import { ToggleGroup } from '../../ui/ToggleGroup.js';
 import { TokenEditor } from '../designer/TokenEditor.js';
 
-function InspectorSection({ title, children }: { title: string; children: ReactNode }) {
+function InspectorSection({
+  title,
+  titleSlot,
+  children,
+}: {
+  title?: string;
+  titleSlot?: ReactNode;
+  children: ReactNode;
+}) {
   return (
     <section className="border-b border-line px-4 py-4">
-      <h2 className="mb-3 text-[11px] font-medium uppercase tracking-[0.08em] text-muted">
-        {title}
-      </h2>
+      {titleSlot ?? (
+        <h2 className="mb-3 text-[11px] font-medium uppercase tracking-[0.08em] text-muted">
+          {title}
+        </h2>
+      )}
       <div className="flex flex-col gap-3">{children}</div>
     </section>
+  );
+}
+
+function DocumentTypeTabs({
+  ariaLabel,
+  options,
+  value,
+  onChange,
+}: {
+  ariaLabel: string;
+  options: readonly { value: DocumentType; label: string }[];
+  value: DocumentType;
+  onChange: (value: DocumentType) => void;
+}) {
+  return (
+    <div
+      role="tablist"
+      aria-label={ariaLabel}
+      className="grid border-b border-line bg-canvas"
+      style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}
+    >
+      {options.map((option) => {
+        const selected = value === option.value;
+        return (
+          <button
+            key={option.value}
+            type="button"
+            role="tab"
+            aria-selected={selected}
+            onClick={() => {
+              onChange(option.value);
+            }}
+            className={`min-w-0 border-r border-line px-3 py-2 text-center text-[13px] font-medium leading-none transition-colors last:border-r-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-white/55 ${
+              selected
+                ? 'bg-white/[0.07] text-ink shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.7)]'
+                : 'bg-canvas text-muted hover:bg-white/[0.045] hover:text-ink'
+            }`}
+          >
+            <span className="block truncate">{option.label}</span>
+          </button>
+        );
+      })}
+    </div>
   );
 }
 
@@ -43,36 +97,29 @@ export function DocumentToolbar() {
     value: loc,
     label: loc === 'de' ? 'Deutsch' : 'English',
   }));
+  const documentTypeOptions = design.documentTypes.map((dt) => ({
+    value: dt,
+    label: t(`documentTypes.${dt}`),
+  }));
   const rawSidebarPosition = resolvedSlotOptions['sidebar.position'];
   const sidebarPosition = rawSidebarPosition === 'right' ? 'right' : 'left';
   const hasSidebarPosition = Boolean(design.slots.sidebar?.options?.position);
 
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="shrink-0 border-b border-line px-4 py-3">
-        <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-muted">
-          {t('workspace.settings', { defaultValue: 'Format' })}
-        </p>
-        <h2 className="mt-1 text-sm font-medium text-ink">
-          {t('workspace.documentSetup', { defaultValue: 'Dokument einrichten' })}
-        </h2>
-      </div>
-
       <div className="scrollbar-none min-h-0 flex-1 overflow-y-auto">
-        <InspectorSection title={t('workspace.format', { defaultValue: 'Format' })}>
-          {design.documentTypes.length > 1 && (
-            <ToggleGroup
-              options={design.documentTypes.map((dt) => ({
-                value: dt,
-                label: t(`documentTypes.${dt}`),
-              }))}
-              value={activeDocumentType}
-              onChange={(value) => {
-                setActiveDocumentType(value);
-              }}
-            />
-          )}
+        {design.documentTypes.length > 1 && (
+          <DocumentTypeTabs
+            ariaLabel={t('workspace.documentType', { defaultValue: 'Dokumenttyp' })}
+            options={documentTypeOptions}
+            value={activeDocumentType}
+            onChange={(value) => {
+              setActiveDocumentType(value);
+            }}
+          />
+        )}
 
+        <InspectorSection title={t('workspace.format', { defaultValue: 'Format' })}>
           <Select
             label={t('toolbar.design')}
             value={activeDesignId}
@@ -113,12 +160,6 @@ export function DocumentToolbar() {
                   }}
                 />
               </div>
-              <p className="text-xs leading-5 text-muted">
-                {t('workspace.positionHint', {
-                  defaultValue:
-                    'Kompakte Angaben bleiben als Dokumentbereich erhalten; nur die Seite wechselt.',
-                })}
-              </p>
             </div>
           </InspectorSection>
         )}
