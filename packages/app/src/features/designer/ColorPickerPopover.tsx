@@ -39,24 +39,25 @@ export function ColorPickerPopover({ label, value, onChange }: ColorPickerPopove
         onClick={() => {
           setOpen(!open);
         }}
-        className="flex items-center gap-2 text-sm"
+        className="flex h-9 w-full items-center gap-2 border-b border-line bg-white/[0.02] px-2 text-left text-sm transition-colors last:border-b-0 hover:bg-white/[0.045]"
       >
         <span
-          className="block h-7 w-7 rounded-md border border-line-strong shadow-sm"
+          className="block h-5 w-5 shrink-0 border border-line-strong"
           style={{ backgroundColor: value }}
         />
-        <span className="text-ink">{label}</span>
+        <span className="min-w-0 truncate text-xs font-medium text-ink">{label}</span>
+        <span className="ml-auto font-mono text-[10px] uppercase text-muted">{value}</span>
       </button>
 
       {open && (
-        <div className="absolute left-0 z-50 mt-2 flex flex-col gap-2 rounded-lg border border-line-strong bg-surface-2 p-3 shadow-lg">
+        <div className="absolute left-0 z-50 mt-2 flex flex-col gap-2 border border-line-strong bg-surface-2 p-3 shadow-lg">
           <HexColorPicker color={value} onChange={onChange} style={{ width: 200, height: 160 }} />
           <div className="flex items-center gap-1 text-sm">
             <span className="text-muted">#</span>
             <HexColorInput
               color={value}
               onChange={onChange}
-              className="w-full rounded-md border border-line-strong bg-canvas px-2 py-1 text-sm text-ink focus:border-blue focus:outline-none"
+              className="w-full border border-line-strong bg-canvas px-2 py-1 text-sm text-ink focus:border-blue focus:outline-none"
             />
           </div>
         </div>

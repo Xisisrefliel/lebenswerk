@@ -8,10 +8,11 @@ import { useSettingsStore } from '../../state/settingsStore.js';
 import { ToggleGroup } from '../../ui/ToggleGroup.js';
 
 interface SlotOptionsEditorProps {
+  excludeOptionKeys?: readonly string[] | undefined;
   slotName: string;
 }
 
-export function SlotOptionsEditor({ slotName }: SlotOptionsEditorProps) {
+export function SlotOptionsEditor({ excludeOptionKeys = [], slotName }: SlotOptionsEditorProps) {
   const design = useActiveDesign();
   const setSlotOption = useDesignStore((s) => s.setSlotOption);
   const resolvedOptions = useResolvedSlotOptions();
@@ -21,10 +22,14 @@ export function SlotOptionsEditor({ slotName }: SlotOptionsEditorProps) {
 
   const slotDef = design.slots[slotName];
   if (!slotDef?.options || Object.keys(slotDef.options).length === 0) return null;
+  const optionEntries = Object.entries(slotDef.options).filter(
+    ([, decl]) => !excludeOptionKeys.includes(decl.key),
+  );
+  if (optionEntries.length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-2.5 rounded-lg border border-line-strong bg-surface p-3.5">
-      {Object.entries(slotDef.options).map(([, decl]: [string, OptionDeclaration]) => {
+    <div className="flex flex-col gap-2.5 border-b border-line bg-white/[0.015] p-3">
+      {optionEntries.map(([, decl]: [string, OptionDeclaration]) => {
         const resolvedKey = `${slotName}.${decl.key}`;
         const rawValue = resolvedOptions[resolvedKey];
 

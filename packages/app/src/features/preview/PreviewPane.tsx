@@ -18,7 +18,9 @@ export function PreviewPane() {
 
   const resume = useResumeStore((s) => s.resume);
   const coverLetter = useCoverLetterStore((s) => s.coverLetter);
+  const uiLocale = useSettingsStore((s) => s.settings.uiLocale);
   const documentLocale = useSettingsStore((s) => s.settings.documentLocale);
+  const setUiLocale = useSettingsStore((s) => s.setUiLocale);
   const design = useActiveDesign();
   const overrides = useDesignStore((s) => s.overrides);
   const activeDocumentType = useDesignStore((s) => s.activeDocumentType);
@@ -96,6 +98,10 @@ export function PreviewPane() {
     setZoom(null);
   }, []);
 
+  const toggleLocale = () => {
+    setUiLocale(uiLocale === 'de' ? 'en' : 'de');
+  };
+
   return (
     <div className="flex h-full flex-col">
       {/* Toolbar: page count + zoom controls + rendering status */}
@@ -120,6 +126,26 @@ export function PreviewPane() {
               {t('preview.rendering')}
             </span>
           )}
+
+          <button
+            type="button"
+            onClick={toggleLocale}
+            className="mr-1 flex h-7 items-center gap-1.5 border border-line-strong bg-white/[0.025] px-2 text-xs font-medium text-muted transition-colors hover:border-white/25 hover:text-ink"
+            title={t('settings.uiLocale')}
+          >
+            <svg
+              className="h-3.5 w-3.5"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.2"
+            >
+              <circle cx="8" cy="8" r="6.5" />
+              <ellipse cx="8" cy="8" rx="3" ry="6.5" />
+              <line x1="1.5" y1="8" x2="14.5" y2="8" />
+            </svg>
+            {uiLocale.toUpperCase()}
+          </button>
 
           <button
             type="button"

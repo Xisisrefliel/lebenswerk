@@ -12,28 +12,39 @@ import { useSettingsStore } from './state/settingsStore.js';
 export function App() {
   const { t, i18n } = useTranslation();
   const uiLocale = useSettingsStore((s) => s.settings.uiLocale);
-  const setUiLocale = useSettingsStore((s) => s.setUiLocale);
   const [clearDialogOpen, setClearDialogOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [previewVisible, setPreviewVisible] = useState(false);
+  const [mobilePanel, setMobilePanel] = useState<'content' | 'preview' | 'settings'>('content');
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window === 'undefined' ? true : window.matchMedia('(min-width: 1024px)').matches,
+  );
 
   useEffect(() => {
     void i18n.changeLanguage(uiLocale);
   }, [i18n, uiLocale]);
 
-  const toggleLocale = () => {
-    setUiLocale(uiLocale === 'de' ? 'en' : 'de');
-  };
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 1024px)');
+    const update = () => {
+      setIsDesktop(query.matches);
+    };
+    update();
+    query.addEventListener('change', update);
+    return () => {
+      query.removeEventListener('change', update);
+    };
+  }, []);
 
   const handleClearAll = () => {
     clearAllStores();
     setClearDialogOpen(false);
   };
+  const showPreviewPane = isDesktop || mobilePanel === 'preview';
 
   return (
     <>
       <div
-        className="flex min-h-screen flex-col overflow-x-hidden lg:h-screen lg:min-h-0"
+        className="flex min-h-screen flex-col overflow-x-hidden bg-canvas lg:h-screen lg:min-h-0"
         data-cv-app-chrome
       >
         {/* Clear-all warning dialog */}
@@ -82,71 +93,44 @@ export function App() {
           </div>
         )}
 
-        {/* App header */}
-        <header className="flex shrink-0 items-center justify-between gap-2 border-b border-line bg-canvas/80 px-3 py-2 backdrop-blur-md sm:gap-3">
-          <div className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-white/[0.06]">
-              <svg className="h-3.5 w-3.5 text-ink" viewBox="0 0 16 16" fill="currentColor">
+        <header className="flex h-12 shrink-0 items-center justify-between gap-3 border-b border-line bg-canvas px-3 sm:px-4">
+          <div className="flex min-w-0 items-center gap-2.5">
+            <div className="flex h-6 w-6 shrink-0 items-center justify-center border border-line-strong bg-white/[0.04]">
+              <svg className="h-3 w-3 text-ink" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M2 2h5.5v5.5H2V2zm6.5 0H14v5.5H8.5V2zM2 8.5h5.5V14H2V8.5zm6.5 0H14V14H8.5V8.5z" />
               </svg>
             </div>
-            <h1 className="min-w-0 truncate text-sm font-semibold text-ink">{t('app.title')}</h1>
+            <div className="min-w-0">
+              <h1 className="truncate text-sm font-medium tracking-[-0.01em] text-ink">
+                Lebenswerk
+              </h1>
+              <p className="hidden text-[11px] leading-none text-muted sm:block">
+                {t('app.title')}
+              </p>
+            </div>
           </div>
 
           <div className="flex shrink-0 items-center gap-1.5">
-            {/* Desktop-only actions */}
             <div className="hidden items-center gap-1.5 md:flex">
               <IoButtons />
 
-              {/* Clear all data */}
               <button
                 type="button"
                 onClick={() => {
                   setClearDialogOpen(true);
                 }}
-                className="rounded-md border border-red/40 px-2.5 py-1.5 text-xs font-medium text-red transition-colors hover:bg-red hover:text-white hover:border-red"
+                className="border border-red/40 px-2.5 py-1.5 text-xs font-medium text-red transition-colors hover:bg-red hover:text-white hover:border-red"
               >
                 {t('actions.clearAll')}
               </button>
-
-              {/* Language toggle — globe icon */}
-              <button
-                type="button"
-                onClick={toggleLocale}
-                className="flex items-center gap-1.5 rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-muted transition-colors hover:border-white/25 hover:text-ink"
-                title={t('settings.uiLocale')}
-              >
-                <svg
-                  className="h-3.5 w-3.5"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                >
-                  <circle cx="8" cy="8" r="6.5" />
-                  <ellipse cx="8" cy="8" rx="3" ry="6.5" />
-                  <line x1="1.5" y1="8" x2="14.5" y2="8" />
-                </svg>
-                {uiLocale.toUpperCase()}
-              </button>
             </div>
 
-            {/* Download PDF — always visible */}
-            <button
-              type="button"
-              onClick={triggerPreviewPrint}
-              className="rounded-md bg-accent px-3 py-1.5 text-xs font-semibold text-black shadow-sm transition-all hover:bg-white/90 active:bg-white/80"
-            >
-              {t('actions.downloadPdf')}
-            </button>
-
-            {/* Hamburger menu button — mobile only */}
             <button
               type="button"
               onClick={() => {
                 setMenuOpen((v) => !v);
               }}
-              className="rounded-md border border-line-strong p-2 text-muted transition-colors hover:bg-white/[0.05] hover:text-ink md:hidden"
+              className="h-8 w-8 rounded-[5px] border border-line-strong text-muted transition-colors hover:bg-white/[0.05] hover:text-ink md:hidden"
               aria-label="Menu"
             >
               {menuOpen ? (
@@ -190,82 +174,71 @@ export function App() {
             >
               {t('actions.clearAll')}
             </button>
-            <button
-              type="button"
-              onClick={() => {
-                toggleLocale();
-                setMenuOpen(false);
-              }}
-              className="flex items-center justify-center gap-1.5 rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-muted transition-colors hover:border-white/25 hover:text-ink"
-            >
-              <svg
-                className="h-3.5 w-3.5"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.2"
-              >
-                <circle cx="8" cy="8" r="6.5" />
-                <ellipse cx="8" cy="8" rx="3" ry="6.5" />
-                <line x1="1.5" y1="8" x2="14.5" y2="8" />
-              </svg>
-              {uiLocale.toUpperCase()}
-            </button>
           </div>
         )}
 
-        {/* Document toolbar: design, language, settings, doc type toggle */}
-        <DocumentToolbar />
-
-        {/* Two-column layout: editor + preview */}
-        <div className="flex flex-col p-0 lg:min-h-0 lg:flex-1 lg:flex-row lg:p-0">
-          <section
-            className={`min-w-0 p-3 lg:min-h-0 lg:basis-1/2 lg:overflow-y-auto lg:scrollbar-none lg:p-4 ${previewVisible ? 'hidden lg:block' : ''}`}
-          >
-            <div className="flex flex-col gap-3">
-              <ResumeEditor />
-            </div>
-          </section>
-
-          <section
-            className={`min-w-0 overflow-hidden border-t border-line bg-canvas lg:min-h-0 lg:basis-1/2 lg:border-t-0 lg:border-l ${previewVisible ? '' : 'h-0 lg:h-auto'}`}
-          >
-            <PreviewPane />
-          </section>
+        <div className="grid h-11 shrink-0 grid-cols-3 border-b border-line bg-surface/60 lg:hidden">
+          {[
+            { key: 'content', label: t('workspace.content', { defaultValue: 'Inhalt' }) },
+            { key: 'preview', label: t('workspace.preview', { defaultValue: 'Vorschau' }) },
+            { key: 'settings', label: t('workspace.settings', { defaultValue: 'Format' }) },
+          ].map((item) => (
+            <button
+              key={item.key}
+              type="button"
+              onClick={() => {
+                setMobilePanel(item.key as typeof mobilePanel);
+              }}
+              className={`border-r border-line text-xs font-medium last:border-r-0 ${
+                mobilePanel === item.key ? 'bg-white/[0.06] text-ink' : 'text-muted'
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
 
-        {/* Floating toggle button — mobile only */}
-        <button
-          type="button"
-          onClick={() => {
-            setPreviewVisible((v) => !v);
-          }}
-          className="fixed bottom-5 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-accent text-black shadow-lg transition-all hover:bg-white/90 active:scale-95 lg:hidden"
-          title={previewVisible ? t('preview.showEditor') : t('preview.showPreview')}
-        >
-          {previewVisible ? (
-            <svg
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <path d="M13.586 3.586a2 2 0 112.828 2.828l-8.793 8.793-3.536.707.707-3.536 8.794-8.792z" />
-            </svg>
-          ) : (
-            <svg
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <path d="M10 4.5C5.5 4.5 2 10 2 10s3.5 5.5 8 5.5 8-5.5 8-5.5-3.5-5.5-8-5.5z" />
-              <circle cx="10" cy="10" r="2.5" />
-            </svg>
-          )}
-        </button>
+        <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-[minmax(24rem,28rem)_minmax(34rem,1fr)_minmax(18rem,21rem)]">
+          <aside
+            className={`min-h-0 border-r border-line bg-surface/35 lg:block ${
+              mobilePanel === 'content' ? 'block' : 'hidden'
+            }`}
+          >
+            <div className="flex h-full min-h-0 flex-col">
+              <div className="shrink-0 border-b border-line px-4 py-3">
+                <h2 className="text-sm font-medium text-ink">
+                  {t('workspace.sections', { defaultValue: 'Abschnitte bearbeiten' })}
+                </h2>
+              </div>
+              <div className="scrollbar-none min-h-0 flex-1 overflow-y-auto px-4 py-3">
+                <ResumeEditor />
+              </div>
+              <button
+                type="button"
+                onClick={triggerPreviewPrint}
+                className="h-10 w-full shrink-0 border-t border-white/20 bg-accent text-xs font-semibold tracking-[0.08em] text-black shadow-lg shadow-black/30 transition-colors hover:bg-white active:bg-white/85"
+              >
+                PDF EXPORT
+              </button>
+            </div>
+          </aside>
+
+          <main
+            className={`min-w-0 overflow-hidden bg-canvas lg:block ${
+              mobilePanel === 'preview' ? 'block' : 'hidden'
+            }`}
+          >
+            {showPreviewPane ? <PreviewPane /> : null}
+          </main>
+
+          <aside
+            className={`min-h-0 border-l border-line bg-surface/35 lg:block ${
+              mobilePanel === 'settings' ? 'block' : 'hidden'
+            }`}
+          >
+            <DocumentToolbar />
+          </aside>
+        </div>
       </div>
       {process.env.NODE_ENV === 'development' && <Agentation />}
     </>
