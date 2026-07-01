@@ -25,14 +25,14 @@ export function IoButtons() {
         onClick={() => {
           downloadJson();
         }}
-        className="rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-ink transition-colors hover:border-white/25 hover:bg-white/[0.06]"
+        className="border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-ink transition-colors hover:border-white/25 hover:bg-white/[0.06]"
       >
         {t('actions.exportJson')}
       </button>
       <button
         type="button"
         onClick={() => fileInputRef.current?.click()}
-        className="rounded-md border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-ink transition-colors hover:border-white/25 hover:bg-white/[0.06]"
+        className="border border-line-strong bg-white/[0.03] px-2.5 py-1.5 text-xs font-medium text-ink transition-colors hover:border-white/25 hover:bg-white/[0.06]"
       >
         {t('actions.importJson')}
       </button>
